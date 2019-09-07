@@ -2,4 +2,5 @@ src
 examples
 .babelrc
 .gitignore
+.travis.yml
 webpack.config.js
