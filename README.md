@@ -1,4 +1,5 @@
 # react-portal-modal
+[![Build Status](https://travis-ci.org/shibe97/react-portal-modal.svg?branch=master)](https://travis-ci.org/shibe97/react-portal-modal)
 
 This is a Customizable Modal.
 
