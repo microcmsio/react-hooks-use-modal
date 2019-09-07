@@ -1,6 +1,6 @@
 {
   "name": "react-portal-modal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A modal component with react-portal",
   "main": "dist/index.js",
   "dependencies": {},
