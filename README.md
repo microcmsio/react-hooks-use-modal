@@ -7,7 +7,7 @@ This is a Customizable Modal.
 ```javascript
 import React, { useState, useCallback } from 'react';
 import { render } from 'react-dom';
-import Modal from '../../src';
+import Modal from 'react-portal-modal';
 import styles from './styles.module.css';
 
 const App = () => {
