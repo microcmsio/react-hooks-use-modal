@@ -1,7 +1,7 @@
 {
   "name": "react-portal-modal",
   "version": "1.0.0",
-  "description": "React Portal Modal",
+  "description": "A modal component with react-portal",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "transpile": "babel src -d dist --copy-files"
+    "build": "babel src -d dist --copy-files"
   },
   "lint-staged": {
     "*.{js,jsx,json,css,md}": [

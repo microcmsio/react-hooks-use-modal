@@ -2,8 +2,8 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import styles from './styles.module.css';
 
-export default ({ children, isOpen, close, elementId = 'root' }) => {
-  if (!isOpen) {
+export default ({ children, isOpen = false, close, elementId = 'root' }) => {
+  if (isOpen === false) {
     return null;
   }
   return createPortal(
