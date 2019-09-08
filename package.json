@@ -1,7 +1,7 @@
 {
-  "name": "react-portal-modal",
+  "name": "react-use-modal",
   "version": "1.0.2",
-  "description": "A modal component with react-portal",
+  "description": "A react hook which can open the modal with react-portal",
   "main": "dist/index.js",
   "dependencies": {},
   "devDependencies": {
@@ -43,12 +43,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shibe97/react-portal-modal.git"
+    "url": "git+https://github.com/shibe97/react-use-modal.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shibe97/react-portal-modal/issues"
+    "url": "https://github.com/shibe97/react-use-modal/issues"
   },
-  "homepage": "https://github.com/shibe97/react-portal-modal#readme"
+  "homepage": "https://github.com/shibe97/react-use-modal#readme"
 }

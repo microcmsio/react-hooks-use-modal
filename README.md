@@ -1,8 +1,8 @@
 # useModal
 
-[![Build Status](https://travis-ci.org/shibe97/use-modal.svg?branch=master)](https://travis-ci.org/shibe97/use-modal)
+[![Build Status](https://travis-ci.org/shibe97/react-use-modal.svg?branch=master)](https://travis-ci.org/shibe97/react-use-modal)
 
-This is a Customizable Modal.
+This is a react hook which can open the modal easily.
 
 ## Usage
 
