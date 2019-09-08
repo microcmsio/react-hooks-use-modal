@@ -1,6 +1,6 @@
 # useModal
 
-[![Build Status](https://travis-ci.org/shibe97/react-use-modal.svg?branch=master)](https://travis-ci.org/shibe97/react-use-modal)
+[![Build Status](https://travis-ci.org/shibe97/react-hooks-use-modal.svg?branch=master)](https://travis-ci.org/shibe97/react-hooks-use-modal)
 
 This is a react hook which can open the modal easily.
 
