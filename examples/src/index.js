@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import useModal from '../../src';
+import useModal from '../../dist';
 import styles from './styles.module.css';
 
 const App = () => {
