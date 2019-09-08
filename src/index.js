@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './styles.module.css';
 
-export default ({ children, isOpen = false, close, elementId = 'root' }) => {
+const Modal = ({ children, isOpen = false, close, elementId = 'root' }) => {
   if (isOpen === false) {
     return null;
   }
@@ -14,3 +14,19 @@ export default ({ children, isOpen = false, close, elementId = 'root' }) => {
     document.getElementById(elementId)
   );
 };
+
+const useModal = elementId => {
+  const [isOpen, setOpen] = useState(false);
+  const open = useCallback(() => setOpen(true), [setOpen]);
+  const close = useCallback(() => setOpen(false), [setOpen]);
+
+  const ModalWrapper = ({ children }) => (
+    <Modal isOpen={isOpen} close={close} elementId={elementId}>
+      {children}
+    </Modal>
+  );
+
+  return [ModalWrapper, open, close];
+};
+
+export default useModal;

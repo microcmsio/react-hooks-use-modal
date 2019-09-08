@@ -1,5 +1,6 @@
-# react-portal-modal
-[![Build Status](https://travis-ci.org/shibe97/react-portal-modal.svg?branch=master)](https://travis-ci.org/shibe97/react-portal-modal)
+# useModal
+
+[![Build Status](https://travis-ci.org/shibe97/use-modal.svg?branch=master)](https://travis-ci.org/shibe97/use-modal)
 
 This is a Customizable Modal.
 
@@ -8,20 +9,19 @@ This is a Customizable Modal.
 ```javascript
 import React, { useState, useCallback } from 'react';
 import { render } from 'react-dom';
-import Modal from 'react-portal-modal';
+import useModal from 'use-modal';
 import styles from './styles.module.css';
 
 const App = () => {
-  const [isOpen, setOpen] = useState(false);
-  const open = useCallback(() => setOpen(true), [setOpen]);
-  const close = useCallback(() => setOpen(false), [setOpen]);
+  const [Modal, open, close] = useModal();
   return (
     <div>
       <button onClick={open}>OPEN</button>
-      <Modal isOpen={isOpen} close={close}>
+      <Modal>
         <div className={styles.modal}>
           <h1>Title</h1>
-          <p>This is a react-portal-modal.</p>
+          <p>This is a customizable modal.</p>
+          <button onClick={close}>CLOSE</button>
         </div>
       </Modal>
     </div>
@@ -29,14 +29,6 @@ const App = () => {
 };
 render(<App />, document.getElementById('root'));
 ```
-
-## Props
-
-| property  | Required | Type     | description                                 | example               | default |
-| :-------- | :------- | :------- | :------------------------------------------ | :-------------------- | :------ |
-| isOpen    | required | Boolean  | whether the modal is open                   | false                 | false   |
-| close     | required | Function | close the modal                             | -                     | -       |
-| elementId | option   | String   | an element id for which the modal is output | 'root', 'app', etc... | 'root'  |
 
 ## How To Develop
 
