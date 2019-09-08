@@ -9,7 +9,7 @@ This is a react hook which can open the modal easily.
 ```javascript
 import React, { useState, useCallback } from 'react';
 import { render } from 'react-dom';
-import useModal from 'react-use-modal';
+import useModal from 'react-hooks-use-modal';
 import styles from './styles.module.css';
 
 const App = () => {
