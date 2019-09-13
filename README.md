@@ -32,18 +32,18 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc] = useModal(domNode)`
+### [ModalComponent, openFunc, closeFunc] = useModal(domNode)
 
-`ModalComponent`
+`ModalComponent`  
 Modal component that displays children in the screen center.
 
-`openFunc`
+`openFunc`  
 A function to open modal.
 
-`closeFunc`
+`closeFunc`  
 A function to close modal.
 
-`domNode`
+`domNode`  
 Modal component uses React-Portal.
 You can specify the output destination domNode with this argument
 
