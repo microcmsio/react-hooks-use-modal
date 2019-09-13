@@ -13,7 +13,7 @@ import useModal from 'react-hooks-use-modal';
 import styles from './styles.module.css';
 
 const App = () => {
-  const [Modal, open, close] = useModal();
+  const [Modal, open, close] = useModal('root');
   return (
     <div>
       <button onClick={open}>OPEN</button>
@@ -29,6 +29,23 @@ const App = () => {
 };
 render(<App />, document.getElementById('root'));
 ```
+
+## Syntax
+
+### [ModalComponent, openFunc, closeFunc] = useModal(domNode)`
+
+`ModalComponent`
+Modal component that displays children in the screen center.
+
+`openFunc`
+A function to open modal.
+
+`closeFunc`
+A function to close modal.
+
+`domNode`
+Modal component uses React-Portal.
+You can specify the output destination domNode with this argument
 
 ## Demo
 
