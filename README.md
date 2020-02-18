@@ -32,7 +32,7 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc] = useModal(domNode, preventScroll)
+### [ModalComponent, openFunc, closeFunc] = useModal(domNode, preventScroll?)
 
 `ModalComponent`
 Modal component that displays children in the screen center.
