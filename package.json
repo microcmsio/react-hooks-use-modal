@@ -21,7 +21,8 @@
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "disable-scroll": "^0.5.1"
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",
