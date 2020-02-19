@@ -27,8 +27,9 @@
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "build": "babel src -d dist --copy-files",
-    "demo": "webpack --mode production && gh-pages -d examples/dist"
+    "build:src": "babel src -d dist --copy-files",
+    "build:demo": "webpack --mode production",
+    "deploy:demo": "gh-pages -d examples/dist"
   },
   "lint-staged": {
     "*.{js,jsx,json,css,md}": [
