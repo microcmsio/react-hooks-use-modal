@@ -1,15 +1,20 @@
 import React from 'react';
 import { render } from 'react-dom';
 import useModal from '../../dist';
-import styles from './styles.module.css';
+
+const modalStyle = {
+  backgroundColor: '#fff',
+  padding: '60px 100px',
+  borderRadius: '10px'
+};
 
 const App = () => {
-  const [Modal, open, close] = useModal();
+  const [Modal, open, close] = useModal('root', true);
   return (
     <div>
       <button onClick={open}>OPEN</button>
       <Modal>
-        <div className={styles.modal}>
+        <div style={modalStyle}>
           <h1>Title</h1>
           <p>This is a customizable modal.</p>
           <button onClick={close}>CLOSE</button>
