@@ -42,7 +42,7 @@ const Modal = ({ children, isOpen = false, close, elementId = 'root' }) => {
   );
 };
 
-const useModal = (elementId, preventScroll = false) => {
+const useModal = (elementId = 'root', preventScroll = false) => {
   const [isOpen, setOpen] = useState(false);
   const open = useCallback(() => {
     setOpen(true);
