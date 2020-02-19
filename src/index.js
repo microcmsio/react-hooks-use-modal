@@ -64,7 +64,7 @@ const useModal = (elementId = 'root', options = {}) => {
     </Modal>
   );
 
-  return [ModalWrapper, open, close];
+  return [ModalWrapper, open, close, isOpen];
 };
 
 export default useModal;
