@@ -32,7 +32,7 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc] = useModal(domNode, preventScroll?)
+### [ModalComponent, openFunc, closeFunc] = useModal(domNode?, preventScroll?)
 
 `ModalComponent`
 Modal component that displays children in the screen center.
@@ -44,11 +44,14 @@ A function to open modal.
 A function to close modal.
 
 `domNode`
+Optional.
+Default value is 'root'.
 Modal component uses React-Portal.
 You can specify the output destination domNode with this argument
 
 `preventScroll`
 Optional to prevent scrolling while modal is open.
+Default value is false.
 
 ## Demo
 
