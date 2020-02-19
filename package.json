@@ -1,6 +1,6 @@
 {
   "name": "react-hooks-use-modal",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A react hook which can open the modal with react-portal",
   "main": "dist/index.js",
   "dependencies": {

@@ -9,7 +9,7 @@ const modalStyle = {
 };
 
 const App = () => {
-  const [Modal, open, close] = useModal('root', true);
+  const [Modal, open, close] = useModal('root', { preventScroll: true});
   return (
     <div>
       <button onClick={open}>OPEN</button>

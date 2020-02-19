@@ -13,7 +13,7 @@ import useModal from 'react-hooks-use-modal';
 import styles from './styles.module.css';
 
 const App = () => {
-  const [Modal, open, close] = useModal('root');
+  const [Modal, open, close] = useModal('root', { preventScroll: true });
   return (
     <div>
       <button onClick={open}>OPEN</button>
@@ -32,7 +32,7 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc] = useModal(domNode?, preventScroll?)
+### [ModalComponent, openFunc, closeFunc] = useModal(domNode?, { preventScroll? })
 
 `ModalComponent`
 Modal component that displays children in the screen center.
