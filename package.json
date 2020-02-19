@@ -1,9 +1,10 @@
 {
   "name": "react-hooks-use-modal",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A react hook which can open the modal with react-portal",
   "main": "dist/index.js",
   "dependencies": {
+    "disable-scroll": "^0.5.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -11,11 +12,9 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
-    "css-loader": "^3.2.0",
     "gh-pages": "^2.1.1",
     "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.18.2",
-    "style-loader": "^1.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "webpack": "^4.39.3",
