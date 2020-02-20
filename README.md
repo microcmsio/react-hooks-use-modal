@@ -10,15 +10,17 @@ This is a react hook which can open the modal easily.
 import React, { useState, useCallback } from 'react';
 import { render } from 'react-dom';
 import useModal from 'react-hooks-use-modal';
-import styles from './styles.module.css';
 
 const App = () => {
-  const [Modal, open, close] = useModal('root', { preventScroll: true });
+  const [Modal, open, close, isOpen] = useModal('root', {
+    preventScroll: true
+  });
   return (
     <div>
+      <p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
       <button onClick={open}>OPEN</button>
       <Modal>
-        <div className={styles.modal}>
+        <div>
           <h1>Title</h1>
           <p>This is a customizable modal.</p>
           <button onClick={close}>CLOSE</button>
@@ -44,7 +46,7 @@ A function to open modal.
 A function to close modal.
 
 `isOpenBool`
-A boolean to know the state wether modal is open or not
+A boolean to know the state whether modal is open or not.
 
 `domNode`
 Optional.
@@ -68,13 +70,19 @@ https://shibe97.github.io/react-hooks-use-modal/
 $ npm install
 ```
 
-### Build
+### Build src
 
 ```
-$ npm run build
+$ npm run build:src
 ```
 
-### Example
+### Build examples
+
+```
+$ npm run build:demo
+```
+
+### Start examples
 
 ```
 $ npm start
