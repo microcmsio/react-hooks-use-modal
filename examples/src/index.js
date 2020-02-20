@@ -9,9 +9,12 @@ const modalStyle = {
 };
 
 const App = () => {
-  const [Modal, open, close] = useModal('root', { preventScroll: true});
+  const [Modal, open, close, isOpen] = useModal('root', {
+    preventScroll: true
+  });
   return (
     <div>
+      <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
       <Modal>
         <div style={modalStyle}>
