@@ -46,12 +46,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shibe97/react-hooks-use-modal.git"
+    "url": "git+https://github.com/microcmsio/react-hooks-use-modal.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shibe97/react-hooks-use-modal/issues"
+    "url": "https://github.com/microcmsio/react-hooks-use-modal/issues"
   },
-  "homepage": "https://github.com/shibe97/react-hooks-use-modal#readme"
+  "homepage": "https://github.com/microcmsio/react-hooks-use-modal#readme"
 }
