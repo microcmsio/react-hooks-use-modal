@@ -4,7 +4,7 @@
   "description": "A react hook which can open the modal with react-portal",
   "main": "dist/index.js",
   "dependencies": {
-    "disable-scroll": "^0.5.1"
+    "disable-scroll": "^0.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -22,8 +22,8 @@
     "webpack-dev-server": "^3.8.0"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",
