@@ -7,7 +7,7 @@
     "disable-scroll": "^0.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
+    "@babel/cli": "^7.14.8",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
@@ -19,7 +19,7 @@
     "react-dom": "^16.9.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.11.2"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
