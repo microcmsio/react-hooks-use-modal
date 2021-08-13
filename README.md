@@ -9,25 +9,25 @@ This is a react hook which can open the modal easily.
 ```javascript
 import React, { useState, useCallback } from 'react';
 import { render } from 'react-dom';
-import useModal from 'react-hooks-use-modal';
+import { useModal } from 'react-hooks-use-modal';
 
 const App = () => {
-  const [Modal, open, close, isOpen] = useModal('root', {
-    preventScroll: true
-  });
-  return (
-    <div>
-      <p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
-      <button onClick={open}>OPEN</button>
-      <Modal>
+    const [Modal, open, close, isOpen] = useModal('root', {
+        preventScroll: true,
+    });
+    return (
         <div>
-          <h1>Title</h1>
-          <p>This is a customizable modal.</p>
-          <button onClick={close}>CLOSE</button>
+            <p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
+            <button onClick={open}>OPEN</button>
+            <Modal>
+                <div>
+                    <h1>Title</h1>
+                    <p>This is a customizable modal.</p>
+                    <button onClick={close}>CLOSE</button>
+                </div>
+            </Modal>
         </div>
-      </Modal>
-    </div>
-  );
+    );
 };
 render(<App />, document.getElementById('root'));
 ```
