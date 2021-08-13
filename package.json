@@ -3,8 +3,18 @@
   "version": "2.0.0",
   "author": "shibe97",
   "description": "A react hook which can open the modal with react-portal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microcmsio/react-hooks-use-modal.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/microcmsio/react-hooks-use-modal/issues"
+  },
+  "homepage": "https://github.com/microcmsio/react-hooks-use-modal#readme",
   "source": "src/index.tsx",
   "main": "dist/index.js",
+  "module": "dist/index.modern.js",
   "types": "dist/index.d.ts",
   "dependencies": {
     "disable-scroll": "^0.6.0"
@@ -29,9 +39,9 @@
     "react-dom": "^16.8.0 || ^17.0.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development",
+    "build": "microbundle --sourcemap false",
     "watch": "microbundle --watch",
-    "build": "microbundle",
+    "start": "webpack-dev-server --mode development",
     "build:demo": "webpack --mode production",
     "deploy:demo": "gh-pages -d examples/dist"
   },
@@ -47,14 +57,5 @@
   "prettier": {
     "singleQuote": true,
     "semi": true
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/microcmsio/react-hooks-use-modal.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/microcmsio/react-hooks-use-modal/issues"
-  },
-  "homepage": "https://github.com/microcmsio/react-hooks-use-modal#readme"
+  }
 }

@@ -1,7 +1,5 @@
 # useModal
 
-[![Build Status](https://travis-ci.org/shibe97/react-hooks-use-modal.svg?branch=master)](https://travis-ci.org/shibe97/react-hooks-use-modal)
-
 This is a react hook which can open the modal easily.
 
 ## Usage
@@ -12,22 +10,22 @@ import { render } from 'react-dom';
 import { useModal } from 'react-hooks-use-modal';
 
 const App = () => {
-    const [Modal, open, close, isOpen] = useModal('root', {
-        preventScroll: true,
-    });
-    return (
-        <div>
-            <p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
-            <button onClick={open}>OPEN</button>
-            <Modal>
-                <div>
-                    <h1>Title</h1>
-                    <p>This is a customizable modal.</p>
-                    <button onClick={close}>CLOSE</button>
-                </div>
-            </Modal>
-        </div>
-    );
+	const [Modal, open, close, isOpen] = useModal('root', {
+		preventScroll: true,
+	});
+	return (
+		<div>
+			<p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
+			<button onClick={open}>OPEN</button>
+			<Modal>
+				<div>
+					<h1>Title</h1>
+					<p>This is a customizable modal.</p>
+					<button onClick={close}>CLOSE</button>
+				</div>
+			</Modal>
+		</div>
+	);
 };
 render(<App />, document.getElementById('root'));
 ```
@@ -73,7 +71,13 @@ $ npm install
 ### Build src
 
 ```
-$ npm run build:src
+$ npm run build
+```
+
+### Watch src 
+
+```
+$ npm run watch 
 ```
 
 ### Build examples
