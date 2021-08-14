@@ -40,7 +40,7 @@ const containerStyle: React.CSSProperties = {
   zIndex: 100001
 };
 
-export const Modal: React.FC<Props> = ({ children, isOpen = false, close, elementId = 'root' }) => {
+const Modal: React.FC<Props> = ({ children, isOpen = false, close, elementId = 'root' }) => {
   if (isOpen === false) {
     return null;
   }

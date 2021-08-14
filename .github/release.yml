@@ -17,7 +17,6 @@ jobs:
     - name: release on npm
       run: |
         npm ci
-        npm run tet 
         npm run build
     - run: npm publish
       env:

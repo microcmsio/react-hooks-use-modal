@@ -10,22 +10,22 @@ import { render } from 'react-dom';
 import { useModal } from 'react-hooks-use-modal';
 
 const App = () => {
-	const [Modal, open, close, isOpen] = useModal('root', {
-		preventScroll: true,
-	});
-	return (
-		<div>
-			<p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
-			<button onClick={open}>OPEN</button>
-			<Modal>
-				<div>
-					<h1>Title</h1>
-					<p>This is a customizable modal.</p>
-					<button onClick={close}>CLOSE</button>
-				</div>
-			</Modal>
-		</div>
-	);
+  const [Modal, open, close, isOpen] = useModal('root', {
+    preventScroll: true,
+  });
+  return (
+    <div>
+      <p>Modal is Open? {isOpen ? 'Yes' : 'No'}</p>
+      <button onClick={open}>OPEN</button>
+      <Modal>
+        <div>
+          <h1>Title</h1>
+          <p>This is a customizable modal.</p>
+          <button onClick={close}>CLOSE</button>
+        </div>
+      </Modal>
+    </div>
+  );
 };
 render(<App />, document.getElementById('root'));
 ```
@@ -56,10 +56,6 @@ You can specify the output destination domNode with this argument
 Optional to prevent scrolling while modal is open.
 Default value is false.
 
-## Demo
-
-https://shibe97.github.io/react-hooks-use-modal/
-
 ## How To Develop
 
 ### Setup
@@ -74,10 +70,10 @@ $ npm install
 $ npm run build
 ```
 
-### Watch src 
+### Watch src
 
 ```
-$ npm run watch 
+$ npm run watch
 ```
 
 ### Build examples
