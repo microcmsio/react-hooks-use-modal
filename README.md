@@ -60,7 +60,7 @@ Default value is false.
 
 ## Demo
 
-https://shibe97.github.io/react-hooks-use-modal/
+https://microcmsio.github.io/react-hooks-use-modal/
 
 ## How To Develop
 
