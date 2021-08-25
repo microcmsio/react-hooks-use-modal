@@ -1,8 +1,26 @@
-import disableScroll from 'disable-scroll';
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
+import disableScroll from 'disable-scroll';
 
-const wrapperStyle = {
+export interface ModalProps {
+  children: React.ReactNode;
+  isOpen: boolean;
+  close: () => void;
+  elementId: 'root' | string;
+};
+
+export interface ModalOptions {
+  preventScroll?: boolean;
+};
+
+export type UseModal = (elementId: string, options: ModalOptions) => [
+  ModalWrapper: React.FC<{children: React.ReactNode}>,
+  open: () => void,
+  close: () => void,
+  isOpen: boolean
+];
+
+const wrapperStyle: React.CSSProperties = {
   position: 'fixed',
   top: 0,
   left: 0,
@@ -14,7 +32,7 @@ const wrapperStyle = {
   zIndex: 1000
 };
 
-const maskStyle = {
+const maskStyle: React.CSSProperties = {
   position: 'fixed',
   top: 0,
   left: 0,
@@ -24,12 +42,12 @@ const maskStyle = {
   zIndex: 100000
 };
 
-const containerStyle = {
+const containerStyle: React.CSSProperties = {
   position: 'relative',
   zIndex: 100001
 };
 
-const Modal = ({ children, isOpen = false, close, elementId = 'root' }) => {
+const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementId = 'root' }) => {
   if (isOpen === false) {
     return null;
   }
@@ -38,13 +56,13 @@ const Modal = ({ children, isOpen = false, close, elementId = 'root' }) => {
       <div style={maskStyle} onClick={close} />
       <div style={containerStyle}>{children}</div>
     </div>,
-    document.getElementById(elementId)
+    document.getElementById(elementId) as HTMLElement
   );
 };
 
-const useModal = (elementId = 'root', options = {}) => {
+export const useModal: UseModal = (elementId = 'root', options = {}) => {
   const { preventScroll = false } = options;
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState<boolean>(false);
   const open = useCallback(() => {
     setOpen(true);
     if (preventScroll) {
@@ -58,15 +76,13 @@ const useModal = (elementId = 'root', options = {}) => {
     }
   }, [setOpen, preventScroll]);
 
-  const ModalWrapper = useCallback(({ children }) => {
+  const ModalWrapper = React.memo(({ children }) => {
     return (
       <Modal isOpen={isOpen} close={close} elementId={elementId}>
         {children}
       </Modal>
     )
-  }, [isOpen, close, elementId]);
+  });
 
   return [ModalWrapper, open, close, isOpen];
 };
-
-export default useModal;

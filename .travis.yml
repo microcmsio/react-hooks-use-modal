@@ -1,7 +1,0 @@
-language: node_js
-node_js:
-  - "12.8.1"
-install:
-  - npm install
-script:
-  - npm run build:src

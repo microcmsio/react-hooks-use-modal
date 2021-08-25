@@ -1,24 +1,37 @@
 {
   "name": "react-hooks-use-modal",
-  "version": "1.1.0",
+  "version": "2.0.0",
+  "author": "shibe97",
   "description": "A react hook which can open the modal with react-portal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microcmsio/react-hooks-use-modal.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/microcmsio/react-hooks-use-modal/issues"
+  },
+  "homepage": "https://github.com/microcmsio/react-hooks-use-modal#readme",
+  "source": "src/index.tsx",
   "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "disable-scroll": "^0.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.6",
+    "@types/react": "^17.0.16",
+    "@types/react-dom": "^17.0.9",
     "gh-pages": "^2.1.1",
-    "html-webpack-plugin": "^3.2.0",
-    "prettier": "^1.18.2",
+    "html-webpack-plugin": "^5.3.2",
+    "microbundle": "^0.13.3",
+    "prettier": "^2.3.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.8",
+    "ts-loader": "^8.2.0",
+    "typescript": "^4.3.5",
+    "webpack": "^5.50.0",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2"
   },
   "peerDependencies": {
@@ -26,8 +39,9 @@
     "react-dom": "^16.8.0 || ^17.0.0"
   },
   "scripts": {
+    "build": "microbundle --sourcemap false",
+    "watch": "microbundle --watch",
     "start": "webpack-dev-server --mode development",
-    "build:src": "babel src -d dist --copy-files",
     "build:demo": "webpack --mode production",
     "deploy:demo": "gh-pages -d examples/dist"
   },
@@ -43,15 +57,5 @@
   "prettier": {
     "singleQuote": true,
     "semi": true
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/microcmsio/react-hooks-use-modal.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/microcmsio/react-hooks-use-modal/issues"
-  },
-  "homepage": "https://github.com/microcmsio/react-hooks-use-modal#readme"
+  }
 }
