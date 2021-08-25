@@ -13,7 +13,7 @@ export interface ModalOptions {
   preventScroll?: boolean;
 };
 
-export type UseModal = (elementId: string, options: ModalOptions) => [
+export type UseModal = (elementId: string, options?: ModalOptions) => [
   ModalWrapper: React.FC<{children: React.ReactNode}>,
   open: () => void,
   close: () => void,
