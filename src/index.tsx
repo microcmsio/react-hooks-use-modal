@@ -2,16 +2,23 @@ import React, { useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import disableScroll from 'disable-scroll';
 
-export interface Props {
+export interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
   close: () => void;
   elementId: 'root' | string;
 };
 
-export interface Options {
+export interface ModalOptions {
   preventScroll?: boolean;
 };
+
+export type UseModal = (elementId: string, options: ModalOptions) => [
+  ModalWrapper: React.FC<{children: React.ReactNode}>,
+  open: () => void,
+  close: () => void,
+  isOpen: boolean
+];
 
 const wrapperStyle: React.CSSProperties = {
   position: 'fixed',
@@ -40,7 +47,7 @@ const containerStyle: React.CSSProperties = {
   zIndex: 100001
 };
 
-const Modal: React.FC<Props> = ({ children, isOpen = false, close, elementId = 'root' }) => {
+const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementId = 'root' }) => {
   if (isOpen === false) {
     return null;
   }
@@ -53,7 +60,7 @@ const Modal: React.FC<Props> = ({ children, isOpen = false, close, elementId = '
   );
 };
 
-export const useModal = (elementId = 'root', options: Options = {}): [ModalWrapper: (children: any) => React.ReactElement, open: () => void, close: () => void, isOpen: boolean] => {
+export const useModal: UseModal = (elementId = 'root', options = {}) => {
   const { preventScroll = false } = options;
   const [isOpen, setOpen] = useState<boolean>(false);
   const open = useCallback(() => {
@@ -69,13 +76,13 @@ export const useModal = (elementId = 'root', options: Options = {}): [ModalWrapp
     }
   }, [setOpen, preventScroll]);
 
-  const ModalWrapper = useCallback(({ children }) => {
+  const ModalWrapper = React.memo(({ children }) => {
     return (
       <Modal isOpen={isOpen} close={close} elementId={elementId}>
         {children}
       </Modal>
     )
-  }, [isOpen, close, elementId]);
+  });
 
   return [ModalWrapper, open, close, isOpen];
 };
