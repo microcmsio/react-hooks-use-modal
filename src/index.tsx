@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import disableScroll from 'disable-scroll';
 
@@ -54,6 +54,21 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementI
   if (isOpen === false) {
     return null;
   }
+  const handleEscKeyDown = useCallback(
+    (evt: KeyboardEvent) => {
+      if (evt.code === 'Escape') {
+        close();
+      }
+    },
+    [close]
+  );
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKeyDown);
+    };
+  }, []);
   return createPortal(
     <div style={wrapperStyle}>
       <div style={maskStyle} onClick={close} />
