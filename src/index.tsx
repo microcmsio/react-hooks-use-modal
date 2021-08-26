@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import disableScroll from 'disable-scroll';
 import { useOverlay } from './useOverlay';
@@ -52,7 +52,8 @@ const containerStyle: React.CSSProperties = {
 };
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementId = 'root' }) => {
-  useOverlay(elementId, isOpen, close);
+  const ref = useRef<HTMLDivElement>(null)
+  useOverlay(elementId, isOpen, close, ref);
 
   if (isOpen === false) {
     return null;
@@ -60,7 +61,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementI
   return createPortal(
     <div role="dialog" aria-modal style={wrapperStyle}>
       <div style={maskStyle} onClick={close} />
-      <div style={containerStyle}>{children}</div>
+      <div ref={ref} style={containerStyle}>{children}</div>
     </div>,
     document.getElementById(elementId) as HTMLElement
   );

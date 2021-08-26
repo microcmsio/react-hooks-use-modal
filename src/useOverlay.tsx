@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
 export function useOverlay(
   rootElementId: string,
   isOpen: boolean,
-  close: () => void
+  close: () => void,
+  ref: RefObject<HTMLDivElement>
 ): void {
   useEffect(() => {
     if (!isOpen) {
@@ -15,6 +16,45 @@ export function useOverlay(
         close();
         return;
       }
+
+      if (event.key === "Tab") {
+        event.preventDefault();
+
+        if (ref.current === null) {
+          return;
+        }
+
+        // https://gomakethings.com/how-to-get-the-first-and-last-focusable-elements-in-the-dom/
+        const focusables: HTMLElement[] = Array.from(
+          ref.current.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        );
+
+        const currentIndex = focusables.findIndex(
+          (element) => element === document.activeElement
+        );
+
+        if (currentIndex === -1) {
+          focusables[0].focus();
+          return;
+        }
+
+        const nextIndex = currentIndex + (event.shiftKey ? -1 : 1);
+
+        if (nextIndex === -1) {
+          focusables[focusables.length - 1].focus();
+          return;
+        }
+
+        if (nextIndex === focusables.length) {
+          focusables[0].focus();
+          return;
+        }
+
+        focusables[nextIndex].focus();
+        return;
+      }
     }
 
     document.getElementById(rootElementId)?.setAttribute("aria-hidden", "true");
@@ -24,5 +64,5 @@ export function useOverlay(
       document.getElementById(rootElementId)?.removeAttribute("aria-hidden");
       document.body.removeEventListener("keydown", handleKeydown);
     };
-  }, [isOpen, close, rootElementId]);
+  }, [isOpen, close, ref, rootElementId]);
 }
