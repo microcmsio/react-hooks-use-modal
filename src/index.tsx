@@ -52,7 +52,7 @@ const containerStyle: React.CSSProperties = {
 };
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementId = 'root' }) => {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null);
   useOverlay(elementId, isOpen, close, ref);
 
   if (isOpen === false) {

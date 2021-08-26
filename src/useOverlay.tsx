@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect } from 'react';
 
 export function useOverlay(
   rootElementId: string,
@@ -12,12 +12,12 @@ export function useOverlay(
     }
 
     const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         close();
         return;
       }
 
-      if (event.key === "Tab") {
+      if (event.key === 'Tab') {
         event.preventDefault();
 
         if (ref.current === null) {
@@ -55,14 +55,14 @@ export function useOverlay(
         focusables[nextIndex].focus();
         return;
       }
-    }
+    };
 
-    document.getElementById(rootElementId)?.setAttribute("aria-hidden", "true");
-    document.body.addEventListener("keydown", handleKeydown);
+    document.getElementById(rootElementId)?.setAttribute('aria-hidden', 'true');
+    document.body.addEventListener('keydown', handleKeydown);
 
     return () => {
-      document.getElementById(rootElementId)?.removeAttribute("aria-hidden");
-      document.body.removeEventListener("keydown", handleKeydown);
+      document.getElementById(rootElementId)?.removeAttribute('aria-hidden');
+      document.body.removeEventListener('keydown', handleKeydown);
     };
   }, [isOpen, close, ref, rootElementId]);
 }
