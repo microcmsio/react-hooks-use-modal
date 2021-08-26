@@ -52,7 +52,7 @@ const containerStyle: React.CSSProperties = {
 };
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementId = 'root' }) => {
-  useOverlay(elementId, isOpen);
+  useOverlay(elementId, isOpen, close);
 
   if (isOpen === false) {
     return null;
