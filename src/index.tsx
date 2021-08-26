@@ -13,8 +13,11 @@ export interface ModalOptions {
   preventScroll?: boolean;
 };
 
-export type UseModal = (elementId: string, options?: ModalOptions) => [
-  ModalWrapper: React.FC<{children: React.ReactNode}>,
+export type UseModal = (
+  elementId: string,
+  options?: ModalOptions
+) => [
+  ModalWrapper: React.FC<{ children: React.ReactNode }>,
   open: () => void,
   close: () => void,
   isOpen: boolean
@@ -29,7 +32,7 @@ const wrapperStyle: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  zIndex: 1000
+  zIndex: 1000,
 };
 
 const maskStyle: React.CSSProperties = {
@@ -39,12 +42,12 @@ const maskStyle: React.CSSProperties = {
   bottom: 0,
   right: 0,
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  zIndex: 100000
+  zIndex: 100000,
 };
 
 const containerStyle: React.CSSProperties = {
   position: 'relative',
-  zIndex: 100001
+  zIndex: 100001,
 };
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementId = 'root' }) => {
@@ -76,13 +79,16 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
     }
   }, [setOpen, preventScroll]);
 
-  const ModalWrapper = React.memo(({ children }) => {
-    return (
-      <Modal isOpen={isOpen} close={close} elementId={elementId}>
-        {children}
-      </Modal>
-    )
-  });
+  const ModalWrapper = useCallback(
+    ({ children }) => {
+      return (
+        <Modal isOpen={isOpen} close={close} elementId={elementId}>
+          {children}
+        </Modal>
+      );
+    },
+    [isOpen, close, elementId]
+  );
 
   return [ModalWrapper, open, close, isOpen];
 };
