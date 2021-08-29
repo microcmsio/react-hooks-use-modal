@@ -1,7 +1,6 @@
 import { RefObject, useEffect } from 'react';
 
 export function useOverlay(
-  rootElementId: string,
   isOpen: boolean,
   close: () => void,
   ref: RefObject<HTMLDivElement>
@@ -58,12 +57,10 @@ export function useOverlay(
       }
     };
 
-    document.getElementById(rootElementId)?.setAttribute('aria-hidden', 'true');
     document.body.addEventListener('keydown', handleKeydown);
 
     return () => {
-      document.getElementById(rootElementId)?.removeAttribute('aria-hidden');
       document.body.removeEventListener('keydown', handleKeydown);
     };
-  }, [isOpen, close, ref, rootElementId]);
+  }, [isOpen, close, ref]);
 }
