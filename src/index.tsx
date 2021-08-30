@@ -5,7 +5,7 @@ import disableScroll from 'disable-scroll';
 export interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
+  onOverlayClick: React.MouseEventHandler<HTMLDivElement>;
   elementId: 'root' | string;
 };
 
@@ -51,13 +51,13 @@ const containerStyle: React.CSSProperties = {
   zIndex: 100001,
 };
 
-const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onClick, elementId = 'root' }) => {
+const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick, elementId = 'root' }) => {
   if (isOpen === false) {
     return null;
   }
   return createPortal(
     <div style={wrapperStyle}>
-      <div style={overlayStyle} onClick={onClick} />
+      <div style={overlayStyle} onClick={onOverlayClick} />
       <div style={containerStyle}>{children}</div>
     </div>,
     document.getElementById(elementId) as HTMLElement
@@ -89,7 +89,7 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
   const ModalWrapper = useCallback(
     ({ children }) => {
       return (
-        <Modal isOpen={isOpen} onClick={onOverlayClick} elementId={elementId}>
+        <Modal isOpen={isOpen} onOverlayClick={onOverlayClick} elementId={elementId}>
           {children}
         </Modal>
       );
