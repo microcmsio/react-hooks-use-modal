@@ -5,12 +5,13 @@ import disableScroll from 'disable-scroll';
 export interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
-  close: () => void;
+  onOverlayClick: React.MouseEventHandler<HTMLDivElement>;
   elementId: 'root' | string;
 };
 
 export interface ModalOptions {
   preventScroll?: boolean;
+  closeOnOverlayClick?: boolean;
 };
 
 export type UseModal = (
@@ -35,7 +36,7 @@ const wrapperStyle: React.CSSProperties = {
   zIndex: 1000,
 };
 
-const maskStyle: React.CSSProperties = {
+const overlayStyle: React.CSSProperties = {
   position: 'fixed',
   top: 0,
   left: 0,
@@ -50,13 +51,13 @@ const containerStyle: React.CSSProperties = {
   zIndex: 100001,
 };
 
-const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementId = 'root' }) => {
+const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick, elementId = 'root' }) => {
   if (isOpen === false) {
     return null;
   }
   return createPortal(
     <div style={wrapperStyle}>
-      <div style={maskStyle} onClick={close} />
+      <div style={overlayStyle} onClick={onOverlayClick} />
       <div style={containerStyle}>{children}</div>
     </div>,
     document.getElementById(elementId) as HTMLElement
@@ -64,7 +65,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, close, elementI
 };
 
 export const useModal: UseModal = (elementId = 'root', options = {}) => {
-  const { preventScroll = false } = options;
+  const { preventScroll = false, closeOnOverlayClick = true } = options;
   const [isOpen, setOpen] = useState<boolean>(false);
   const open = useCallback(() => {
     setOpen(true);
@@ -78,11 +79,17 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
       disableScroll.off();
     }
   }, [setOpen, preventScroll]);
+  const onOverlayClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    if (closeOnOverlayClick) {
+      close();
+    }    
+  }, [closeOnOverlayClick, close]);
 
   const ModalWrapper = useCallback(
     ({ children }) => {
       return (
-        <Modal isOpen={isOpen} close={close} elementId={elementId}>
+        <Modal isOpen={isOpen} onOverlayClick={onOverlayClick} elementId={elementId}>
           {children}
         </Modal>
       );
