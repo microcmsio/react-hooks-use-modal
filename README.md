@@ -12,7 +12,7 @@ import { useModal } from 'react-hooks-use-modal';
 const App = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true,
-    closeOnOverlayClick: false;
+    closeOnOverlayClick: false
   });
   return (
     <div>
