@@ -11,6 +11,7 @@ const modalStyle: React.CSSProperties = {
 const App = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true,
+    closeOnOverlayClick: false,
   });
   return (
     <div>
