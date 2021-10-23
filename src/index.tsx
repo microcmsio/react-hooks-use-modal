@@ -1,7 +1,7 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import disableScroll from 'disable-scroll';
-import { useOverlay } from './useOverlay';
+import React, { useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useKeyDown } from './useKeyDown';
 
 export interface ModalProps {
   children: React.ReactNode;
@@ -53,8 +53,7 @@ const containerStyle: React.CSSProperties = {
 };
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick, elementId = 'root' }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  useOverlay(isOpen, close, ref);
+  const [ref] = useKeyDown<HTMLDivElement>(isOpen, close);
 
   if (isOpen === false) {
     return null;
