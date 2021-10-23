@@ -23,13 +23,13 @@ export function useOverlay(
           return;
         }
 
-        // https://gomakethings.com/how-to-get-the-first-and-last-focusable-elements-in-the-dom/
         // https://html.spec.whatwg.org/multipage/interaction.html#the-tabindex-attribute
-        const focusables: HTMLElement[] = Array.from(
+        const focusableDialogElements: HTMLElement[] = Array.from(
           ref.current.querySelectorAll(
             'button, a[href], input:not([type="hidden"]), select, details > summary:first-child, textarea, [tabindex]:not([tabindex="-1"]), [contenteditable]'
           )
         );
+        const focusables = focusableDialogElements.concat(ref.current)
 
         const currentIndex = focusables.findIndex(
           (element) => element === document.activeElement

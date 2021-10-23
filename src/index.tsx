@@ -62,7 +62,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick,
   return createPortal(
     <div style={wrapperStyle}>
       <div style={overlayStyle} onClick={onOverlayClick} />
-      <div role="dialog" aria-modal={isOpen} ref={ref} style={containerStyle}>{children}</div>
+      <div role="dialog" aria-modal={isOpen} ref={ref} style={containerStyle} tabIndex={0}>{children}</div>
     </div>,
     document.getElementById(elementId) as HTMLElement
   );
