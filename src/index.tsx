@@ -60,9 +60,9 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick,
     return null;
   }
   return createPortal(
-    <div role="dialog" aria-modal style={wrapperStyle}>
+    <div style={wrapperStyle}>
       <div style={overlayStyle} onClick={onOverlayClick} />
-      <div ref={ref} style={containerStyle}>{children}</div>
+      <div role="dialog" aria-modal={isOpen} ref={ref} style={containerStyle}>{children}</div>
     </div>,
     document.getElementById(elementId) as HTMLElement
   );
@@ -71,18 +71,21 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick,
 export const useModal: UseModal = (elementId = 'root', options = {}) => {
   const { preventScroll = false, closeOnOverlayClick = true } = options;
   const [isOpen, setOpen] = useState<boolean>(false);
+
   const open = useCallback(() => {
     setOpen(true);
     if (preventScroll) {
       disableScroll.on();
     }
   }, [setOpen, preventScroll]);
+
   const close = useCallback(() => {
     setOpen(false);
     if (preventScroll) {
       disableScroll.off();
     }
   }, [setOpen, preventScroll]);
+
   const onOverlayClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     if (closeOnOverlayClick) {
