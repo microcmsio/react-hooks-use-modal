@@ -6,14 +6,15 @@ import { useKeyDown } from './useKeyDown';
 export interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
+  close: () => void;
   onOverlayClick: React.MouseEventHandler<HTMLDivElement>;
   elementId: 'root' | string;
-};
+}
 
 export interface ModalOptions {
   preventScroll?: boolean;
   closeOnOverlayClick?: boolean;
-};
+}
 
 export type UseModal = (
   elementId: string,
@@ -52,16 +53,25 @@ const containerStyle: React.CSSProperties = {
   zIndex: 100001,
 };
 
-const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick, elementId = 'root' }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  isOpen = false,
+  close,
+  onOverlayClick,
+  elementId = 'root',
+}) => {
   const [ref] = useKeyDown<HTMLDivElement>(isOpen, close);
 
   if (isOpen === false) {
     return null;
   }
+
   return createPortal(
     <div style={wrapperStyle}>
       <div style={overlayStyle} onClick={onOverlayClick} />
-      <div role="dialog" aria-modal={isOpen} ref={ref} style={containerStyle} tabIndex={0}>{children}</div>
+      <div ref={ref} role="dialog" aria-modal={isOpen} style={containerStyle} tabIndex={0}>
+        {children}
+      </div>
     </div>,
     document.getElementById(elementId) as HTMLElement
   );
@@ -85,22 +95,30 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
     }
   }, [setOpen, preventScroll]);
 
-  const onOverlayClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-    if (closeOnOverlayClick) {
-      close();
-    }    
-  }, [closeOnOverlayClick, close]);
+  const onOverlayClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+      if (closeOnOverlayClick) {
+        close();
+      }
+    },
+    [closeOnOverlayClick, close]
+  );
 
   const ModalWrapper = useCallback(
     ({ children }) => {
       return (
-        <Modal isOpen={isOpen} onOverlayClick={onOverlayClick} elementId={elementId}>
+        <Modal
+          isOpen={isOpen}
+          close={close}
+          onOverlayClick={onOverlayClick}
+          elementId={elementId}
+        >
           {children}
         </Modal>
       );
     },
-    [isOpen, close, elementId]
+    [close, elementId, isOpen, onOverlayClick]
   );
 
   return [ModalWrapper, open, close, isOpen];
