@@ -1,20 +1,21 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import { useOverlay } from './useOverlay';
+import { useKeyDown } from './useKeyDown';
 
 export interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
+  close: () => void;
   onOverlayClick: React.MouseEventHandler<HTMLDivElement>;
   elementId: 'root' | string;
   preventScroll?: boolean;
-};
+}
 
 export interface ModalOptions {
   preventScroll?: boolean;
   closeOnOverlayClick?: boolean;
-};
+}
 
 export type UseModal = (
   elementId: string,
@@ -53,10 +54,16 @@ const containerStyle: React.CSSProperties = {
   zIndex: 100001,
 };
 
-const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick, elementId = 'root', preventScroll = false }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  isOpen = false,
+  close,
+  onOverlayClick,
+  elementId = 'root',
+  preventScroll = false,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  useOverlay(isOpen, close, ref);
+  const [ref] = useKeyDown<HTMLDivElement>(isOpen, close);
 
   useEffect(() => {
     if (containerRef.current === null) {
@@ -86,10 +93,13 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick,
   if (isOpen === false) {
     return null;
   }
+
   return createPortal(
-    <div role="dialog" aria-modal style={wrapperStyle} ref={containerRef}>
+    <div ref={containerRef} style={wrapperStyle}>
       <div style={overlayStyle} onClick={onOverlayClick} />
-      <div ref={ref} style={containerStyle}>{children}</div>
+      <div ref={ref} role="dialog" aria-modal={isOpen} style={containerStyle} tabIndex={0}>
+        {children}
+      </div>
     </div>,
     document.getElementById(elementId) as HTMLElement
   );
@@ -98,28 +108,40 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen = false, onOverlayClick,
 export const useModal: UseModal = (elementId = 'root', options = {}) => {
   const { preventScroll, closeOnOverlayClick = true } = options;
   const [isOpen, setOpen] = useState<boolean>(false);
+
   const open = useCallback(() => {
     setOpen(true);
   }, [setOpen]);
+  
   const close = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
-  const onOverlayClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-    if (closeOnOverlayClick) {
-      close();
-    }
-  }, [closeOnOverlayClick, close]);
+  
+  const onOverlayClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+      if (closeOnOverlayClick) {
+        close();
+      }
+    },
+    [closeOnOverlayClick, close]
+  );
 
   const ModalWrapper = useCallback(
     ({ children }) => {
       return (
-        <Modal isOpen={isOpen} onOverlayClick={onOverlayClick} elementId={elementId} preventScroll={preventScroll}>
+        <Modal
+          isOpen={isOpen}
+          close={close}
+          onOverlayClick={onOverlayClick}
+          elementId={elementId}
+          preventScroll={preventScroll}
+        >
           {children}
         </Modal>
       );
     },
-    [isOpen, close, elementId]
+    [close, elementId, isOpen, onOverlayClick]
   );
 
   return [ModalWrapper, open, close, isOpen];
