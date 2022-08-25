@@ -26,6 +26,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "gh-pages": "^2.1.1",
+    "husky": "^8.0.1",
     "html-webpack-plugin": "^5.3.2",
     "microbundle": "^0.13.3",
     "prettier": "^2.3.2",
@@ -47,7 +48,9 @@
     "start": "webpack-dev-server --mode development",
     "lint": "eslint --ext .ts --ext .tsx . --cache",
     "build:demo": "webpack --mode production",
-    "deploy:demo": "gh-pages -d examples/dist"
+    "deploy:demo": "gh-pages -d examples/dist",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
