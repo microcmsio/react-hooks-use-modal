@@ -3,14 +3,13 @@ import {
   disableBodyScroll,
   enableBodyScroll,
 } from 'body-scroll-lock';
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect } from 'react';
 
 export const useBodyScrollLock = <T extends HTMLElement>(
+  ref: RefObject<T>,
   isOpen: boolean,
   preventScroll: boolean
-): [ref: RefObject<T>] => {
-  const ref = useRef<T>(null);
-
+): void => {
   useEffect(() => {
     if (ref.current === null) {
       return;
@@ -29,7 +28,5 @@ export const useBodyScrollLock = <T extends HTMLElement>(
         clearAllBodyScrollLocks();
       };
     }
-  }, [isOpen, preventScroll]);
-
-  return [ref];
+  }, [isOpen, preventScroll, ref]);
 };
