@@ -29,6 +29,7 @@ module.exports = {
   plugins: [htmlWebpackPlugin],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    // fallback: { url: false },
   },
   devServer: {
     port: 3001,

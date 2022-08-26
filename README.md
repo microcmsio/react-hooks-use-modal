@@ -12,7 +12,9 @@ import { useModal } from 'react-hooks-use-modal';
 const App = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true,
-    closeOnOverlayClick: false
+    focusTrapOptions: {
+      clickOutsideDeactivates: false,
+    },
   });
   return (
     <div>
@@ -57,9 +59,17 @@ You can specify the output destination domNode with this argument
 Optional to prevent scrolling while modal is open.
 Default value is false.
 
-`closeOnOverlayClick`
-Optional to close modal when click the overlay.
-Default value is true.
+`focusTrapOptions`
+Override the focus-trap options used internally.
+For example, to prevent a modal from closing when a non-modal element is clicked, do the following
+
+```jsx
+useModal('root', {
+  focusTrapOptions: {
+    clickOutsideDeactivates: false,
+  },
+});
+```
 
 ## Demo
 
