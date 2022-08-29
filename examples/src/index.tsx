@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { useModal } from '../../src';
+import { ModalOptions, useModal } from '../../src';
 
 const modalStyle: React.CSSProperties = {
   backgroundColor: '#fff',
@@ -9,12 +9,20 @@ const modalStyle: React.CSSProperties = {
 };
 
 const App = () => {
-  const [Modal, open, close, isOpen] = useModal('root', {
+  let options: ModalOptions = {
     preventScroll: true,
     focusTrapOptions: {
       clickOutsideDeactivates: false,
     },
-  });
+  };
+
+  if (window.location.pathname === '/close-button') {
+    const newOptions: ModalOptions = { ...options, showCloseButton: true };
+    options = newOptions;
+  }
+
+  const [Modal, open, , isOpen] = useModal('root', options);
+
   return (
     <div>
       <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
@@ -23,10 +31,10 @@ const App = () => {
         <div style={modalStyle}>
           <h1>Title</h1>
           <p>This is a customizable modal.</p>
-          <button onClick={close}>CLOSE</button>
         </div>
       </Modal>
     </div>
   );
 };
+
 render(<App />, document.getElementById('root'));

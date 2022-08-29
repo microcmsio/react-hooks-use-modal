@@ -1,9 +1,18 @@
 const path = require('path');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
-  template: path.join(__dirname, 'examples/src/index.html'),
-  filename: './index.html',
-});
+
+const htmlWebpackPlugins = [
+  new HtmlWebpackPlugin({
+    template: path.join(__dirname, 'examples/src/index.html'),
+    filename: './index.html',
+  }),
+  new HtmlWebpackPlugin({
+    template: path.join(__dirname, 'examples/src/close-button/index.html'),
+    filename: './close-button/index.html',
+  }),
+];
+
 module.exports = {
   entry: path.join(__dirname, 'examples/src/index.tsx'),
   output: {
@@ -26,10 +35,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [htmlWebpackPlugin],
+  plugins: [...htmlWebpackPlugins],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    // fallback: { url: false },
   },
   devServer: {
     port: 3001,
