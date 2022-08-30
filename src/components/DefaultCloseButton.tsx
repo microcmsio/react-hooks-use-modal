@@ -9,7 +9,6 @@ const closeButtonStyle: React.CSSProperties = {
   backgroundColor: 'transparent',
   border: 'none',
   cursor: 'pointer',
-  outline: 'none',
   padding: 0,
   appearance: 'none',
 
@@ -21,7 +20,9 @@ const closeButtonStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: '20px',
+  fontSize: '28px',
+  color: '#fff',
+  transform: 'translateX(100%)',
 };
 
 export const DefaultCloseButton: React.FC<DefaultCloseButtonProps> = ({
