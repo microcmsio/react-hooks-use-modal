@@ -61,6 +61,7 @@ Default value is false.
 
 `focusTrapOptions`
 Override the focus-trap options used internally.
+Details are [here](https://github.com/focus-trap/focus-trap#createoptions).
 For example, to prevent a modal from closing when a non-modal element is clicked, do the following
 
 ```jsx
