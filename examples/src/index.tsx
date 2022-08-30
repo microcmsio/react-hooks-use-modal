@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { ModalOptions, useModal } from '../../src';
+import { ModalConfig } from '../../src/components/ModalConfig';
 
 const modalStyle: React.CSSProperties = {
   backgroundColor: '#fff',
@@ -8,7 +9,7 @@ const modalStyle: React.CSSProperties = {
   borderRadius: '10px',
 };
 
-const App = () => {
+const Modal: React.FC = () => {
   let options: ModalOptions = {
     preventScroll: true,
     focusTrapOptions: {
@@ -50,6 +51,11 @@ const App = () => {
     options = newOptions;
   }
 
+  if (window.location.pathname === '/modal-config') {
+    const newOptions = {};
+    options = newOptions;
+  }
+
   const [Modal, open, , isOpen] = useModal('root', options);
 
   return (
@@ -62,6 +68,24 @@ const App = () => {
           <p>This is a customizable modal.</p>
         </div>
       </Modal>
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return window.location.pathname === '/modal-config' ? (
+    <ModalConfig
+      value={{
+        focusTrapOptions: {
+          clickOutsideDeactivates: true,
+        },
+      }}
+    >
+      <Modal />
+    </ModalConfig>
+  ) : (
+    <div>
+      <Modal />
     </div>
   );
 };
