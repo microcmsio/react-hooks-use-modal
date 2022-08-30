@@ -12,7 +12,9 @@ import { useModal } from 'react-hooks-use-modal';
 const App = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true,
-    closeOnOverlayClick: false
+    focusTrapOptions: {
+      clickOutsideDeactivates: false,
+    },
   });
   return (
     <div>
@@ -33,7 +35,7 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, closeOnOverlayClick? })
+### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions? })
 
 `ModalComponent`
 Modal component that displays children in the screen center.
@@ -57,9 +59,18 @@ You can specify the output destination domNode with this argument
 Optional to prevent scrolling while modal is open.
 Default value is false.
 
-`closeOnOverlayClick`
-Optional to close modal when click the overlay.
-Default value is true.
+`focusTrapOptions`
+Override the focus-trap options used internally.
+Details are [here](https://github.com/focus-trap/focus-trap#createoptions).
+For example, to prevent a modal from closing when a non-modal element is clicked, do the following
+
+```jsx
+useModal('root', {
+  focusTrapOptions: {
+    clickOutsideDeactivates: false,
+  },
+});
+```
 
 ## Demo
 
