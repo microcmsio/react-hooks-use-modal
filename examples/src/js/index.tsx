@@ -1,10 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom';
 
 import { useModal } from '../../../src';
-
-import { Modal as CloseButtonModal } from './close-button';
-import { Modal as CloseButtonWithRenderOptionModal } from './close-button/render-option';
 
 const modalStyle: React.CSSProperties = {
   backgroundColor: '#fff',
@@ -12,7 +8,7 @@ const modalStyle: React.CSSProperties = {
   borderRadius: '10px',
 };
 
-const Modal = () => {
+export const Modal = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     preventScroll: true,
     focusTrapOptions: {
@@ -36,20 +32,3 @@ const Modal = () => {
     </div>
   );
 };
-
-const App = () => {
-  if (window.location.pathname.replace(/\/$/, '') === '/close-button') {
-    return <CloseButtonModal />;
-  }
-
-  if (
-    window.location.pathname.replace(/\/$/, '') ===
-    '/close-button/render-option'
-  ) {
-    return <CloseButtonWithRenderOptionModal />;
-  }
-
-  return <Modal />;
-};
-
-render(<App />, document.getElementById('root'));
