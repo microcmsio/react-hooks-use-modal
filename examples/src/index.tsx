@@ -20,14 +20,16 @@ const CurrentModal = () => {
   return <CommonModal />;
 };
 
-const routes = ['/close-button', '/close-button/render-option'];
+const routes = ['/', '/close-button', '/close-button/render-option'];
 const Wrapper = ({ children }: PropsWithChildren<{}>) => {
   return (
     <div>
       {children}
-      <nav>
-        {routes.map((route) => (
-          <a href={route}>{route}</a>
+      <nav style={{ marginTop: '40px' }}>
+        {routes.map((route, i) => (
+          <a href={route} style={{ marginLeft: i !== 0 ? '10px' : '' }}>
+            {route}
+          </a>
         ))}
       </nav>
     </div>
