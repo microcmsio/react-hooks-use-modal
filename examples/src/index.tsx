@@ -17,7 +17,36 @@ const App = () => {
   };
 
   if (window.location.pathname === '/close-button') {
-    const newOptions: ModalOptions = { ...options, showCloseButton: true };
+    const newOptions: ModalOptions = {
+      ...options,
+      focusTrapOptions: {},
+      showCloseButton: true,
+    };
+    options = newOptions;
+  }
+
+  if (window.location.pathname === '/close-button/render-option') {
+    const newOptions: ModalOptions = {
+      ...options,
+      focusTrapOptions: {},
+      showCloseButton: true,
+      renderCloseButton: (close) => (
+        <button
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: '20px',
+            margin: '0 auto',
+            width: '100px',
+          }}
+          onClick={close}
+          type="button"
+        >
+          Close
+        </button>
+      ),
+    };
     options = newOptions;
   }
 

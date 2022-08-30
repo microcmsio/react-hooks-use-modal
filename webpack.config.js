@@ -1,17 +1,16 @@
+const fs = require('fs');
 const path = require('path');
 
+const globby = require('globby');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const htmlWebpackPlugins = [
-  new HtmlWebpackPlugin({
-    template: path.join(__dirname, 'examples/src/index.html'),
-    filename: './index.html',
-  }),
-  new HtmlWebpackPlugin({
-    template: path.join(__dirname, 'examples/src/close-button/index.html'),
-    filename: './close-button/index.html',
-  }),
-];
+const htmlWebpackPlugins = globby.sync(['examples/src/**/index.html']).map(
+  (filePath) =>
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, filePath),
+      filename: filePath.replace('examples/src/', './'),
+    })
+);
 
 module.exports = {
   entry: path.join(__dirname, 'examples/src/index.tsx'),
