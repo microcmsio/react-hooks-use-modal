@@ -2,8 +2,8 @@ import { Options as FocusTrapOptions } from 'focus-trap';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useBodyScrollLock } from './useBodyScrollLock';
-import { useFocusTrap } from './useFocusTrap';
+import { useBodyScrollLock } from './hooks/useBodyScrollLock';
+import { useFocusTrap } from './hooks/useFocusTrap';
 
 export interface ModalProps {
   children: React.ReactNode;
