@@ -103,6 +103,50 @@ useModal('root', {
 });
 ```
 
+## Global Settings
+
+The `ModalConfig` component allows you to apply a common default configuration to all `useModal` hooks.
+
+```jsx
+<ModalConfig value={options}>
+  <Component />
+</ModalConfig>
+```
+
+The following example sets all `useModal` hooks to not scroll outside the modal by default.
+
+```jsx
+const Component1 = () => {
+  const [Modal] = useModal('root');
+  return (
+    <Modal>
+      <h2>Common</h2>
+    </Modal>
+  );
+};
+const Component2 = () => {
+  const [Modal] = useModal('root', { preventScroll: false }); // override
+  return (
+    <Modal>
+      <h2>Override options</h2>
+    </Modal>
+  );
+};
+
+const App = () => {
+  return (
+    <ModalConfig
+      value={{
+        preventScroll: true,
+      }}
+    >
+      <Component1 />
+      <Component2 />
+    </ModalConfig>
+  );
+};
+```
+
 ## Demo
 
 https://microcmsio.github.io/react-hooks-use-modal/
