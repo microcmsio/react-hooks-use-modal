@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { DefaultCloseButton } from './components/DefaultCloseButton';
 import { Modal, ModalProps } from './components/Modal';
+import { useModalConfig } from './hooks/useModalConfig';
 
 export type ModalOptions = {
   preventScroll?: boolean;
@@ -28,7 +29,11 @@ export type UseModal = (
 ];
 
 export const useModal: UseModal = (elementId = 'root', options = {}) => {
-  const { preventScroll = false, focusTrapOptions = {}, ...rest } = options;
+  const {
+    preventScroll = false,
+    focusTrapOptions = {},
+    ...rest
+  } = { ...useModalConfig(), ...options };
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const open = useCallback(() => {
