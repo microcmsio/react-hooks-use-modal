@@ -38,11 +38,14 @@ const Modal = () => {
 };
 
 const App = () => {
-  if (window.location.pathname === '/close-button') {
+  if (window.location.pathname.replace(/\/$/, '') === '/close-button') {
     return <CloseButtonModal />;
   }
 
-  if (window.location.pathname === '/close-button/render-option') {
+  if (
+    window.location.pathname.replace(/\/$/, '') ===
+    '/close-button/render-option'
+  ) {
     return <CloseButtonWithRenderOptionModal />;
   }
 
