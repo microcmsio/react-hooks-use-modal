@@ -6,18 +6,17 @@ import { Modal as CloseButtonModal } from './js/close-button';
 import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/render-option';
 
 const CurrentModal = () => {
-  if (window.location.pathname.replace(/\/$/, '') === '/close-button') {
-    return <CloseButtonModal />;
+  switch (window.location.pathname.replace(/\/$/, '')) {
+    case '/close-button': {
+      return <CloseButtonModal />;
+    }
+    case '/close-button/render-option': {
+      return <CloseButtonWithRenderOptionModal />;
+    }
+    default: {
+      return <CommonModal />;
+    }
   }
-
-  if (
-    window.location.pathname.replace(/\/$/, '') ===
-    '/close-button/render-option'
-  ) {
-    return <CloseButtonWithRenderOptionModal />;
-  }
-
-  return <CommonModal />;
 };
 
 const routes = ['/', '/close-button', '/close-button/render-option'];
