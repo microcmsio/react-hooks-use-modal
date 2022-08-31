@@ -1,3 +1,4 @@
+import deepmerge from 'deepmerge';
 import { Options as FocusTrapOptions } from 'focus-trap';
 import React, { useCallback, useMemo, useState } from 'react';
 
@@ -33,7 +34,7 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
     preventScroll = false,
     focusTrapOptions = {},
     ...rest
-  } = { ...useModalConfig(), ...options };
+  } = deepmerge<ModalOptions>(useModalConfig(), options);
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const open = useCallback(() => {
