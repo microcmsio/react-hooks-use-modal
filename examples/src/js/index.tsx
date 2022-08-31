@@ -24,9 +24,7 @@ export const Modal = () => {
         <div style={modalStyle}>
           <h1>Title</h1>
           <p>This is a customizable modal.</p>
-          {window.location.pathname.startsWith('/close-button') && (
-            <button onClick={close}>CLOSE</button>
-          )}
+          <button onClick={close}>CLOSE</button>
         </div>
       </Modal>
     </div>

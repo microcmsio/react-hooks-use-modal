@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Modal as CommonModal } from './js';
 import { Modal as CloseButtonModal } from './js/close-button';
 import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/render-option';
+import { ModalWrapper as ModalConfigModal } from './js/modal-config';
 
 const CurrentModal = () => {
   switch (window.location.pathname.replace(/\/$/, '')) {
@@ -13,13 +14,21 @@ const CurrentModal = () => {
     case '/close-button/render-option': {
       return <CloseButtonWithRenderOptionModal />;
     }
+    case '/modal-config': {
+      return <ModalConfigModal />;
+    }
     default: {
       return <CommonModal />;
     }
   }
 };
 
-const routes = ['/', '/close-button', '/close-button/render-option'];
+const routes = [
+  '/',
+  '/close-button',
+  '/close-button/render-option',
+  '/modal-config',
+];
 const Wrapper = ({ children }: PropsWithChildren<{}>) => {
   return (
     <div>
