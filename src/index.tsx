@@ -64,6 +64,8 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
           preventScroll={preventScroll}
           focusTrapOptions={focusTrapOptions}
           closeButton={closeButton}
+          focusTrapOptions={focusTrapOptions}
+          closeButton={closeButton}
         >
           {children}
         </Modal>

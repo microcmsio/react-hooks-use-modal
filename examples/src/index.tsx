@@ -1,92 +1,45 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { render } from 'react-dom';
-import { ModalOptions, useModal } from '../../src';
-import { ModalConfig } from '../../src/components/ModalConfig';
 
-const modalStyle: React.CSSProperties = {
-  backgroundColor: '#fff',
-  padding: '60px 100px',
-  borderRadius: '10px',
+import { Modal as CommonModal } from './js';
+import { Modal as CloseButtonModal } from './js/close-button';
+import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/render-option';
+
+const CurrentModal = () => {
+  switch (window.location.pathname.replace(/\/$/, '')) {
+    case '/close-button': {
+      return <CloseButtonModal />;
+    }
+    case '/close-button/render-option': {
+      return <CloseButtonWithRenderOptionModal />;
+    }
+    default: {
+      return <CommonModal />;
+    }
+  }
 };
 
-const Modal: React.FC = () => {
-  let options: ModalOptions = {
-    preventScroll: true,
-    focusTrapOptions: {
-      clickOutsideDeactivates: false,
-    },
-  };
-
-  if (window.location.pathname === '/close-button') {
-    const newOptions: ModalOptions = {
-      ...options,
-      focusTrapOptions: {},
-      showCloseButton: true,
-    };
-    options = newOptions;
-  }
-
-  if (window.location.pathname === '/close-button/render-option') {
-    const newOptions: ModalOptions = {
-      ...options,
-      focusTrapOptions: {},
-      showCloseButton: true,
-      renderCloseButton: (close) => (
-        <button
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: '20px',
-            margin: '0 auto',
-            width: '100px',
-          }}
-          onClick={close}
-          type="button"
-        >
-          Close
-        </button>
-      ),
-    };
-    options = newOptions;
-  }
-
-  if (window.location.pathname === '/modal-config') {
-    const newOptions = {};
-    options = newOptions;
-  }
-
-  const [Modal, open, , isOpen] = useModal('root', options);
-
+const routes = ['/', '/close-button', '/close-button/render-option'];
+const Wrapper = ({ children }: PropsWithChildren<{}>) => {
   return (
     <div>
-      <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
-      <button onClick={open}>OPEN</button>
-      <Modal>
-        <div style={modalStyle}>
-          <h1>Title</h1>
-          <p>This is a customizable modal.</p>
-        </div>
-      </Modal>
+      {children}
+      <nav style={{ marginTop: '40px' }}>
+        {routes.map((route, i) => (
+          <a href={route} style={{ marginLeft: i !== 0 ? '10px' : '' }}>
+            {route}
+          </a>
+        ))}
+      </nav>
     </div>
   );
 };
 
-const App: React.FC = () => {
-  return window.location.pathname === '/modal-config' ? (
-    <ModalConfig
-      value={{
-        focusTrapOptions: {
-          clickOutsideDeactivates: true,
-        },
-      }}
-    >
-      <Modal />
-    </ModalConfig>
-  ) : (
-    <div>
-      <Modal />
-    </div>
+const App = () => {
+  return (
+    <Wrapper>
+      <CurrentModal />
+    </Wrapper>
   );
 };
 
