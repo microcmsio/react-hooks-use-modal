@@ -64,8 +64,6 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
           preventScroll={preventScroll}
           focusTrapOptions={focusTrapOptions}
           closeButton={closeButton}
-          focusTrapOptions={focusTrapOptions}
-          closeButton={closeButton}
         >
           {children}
         </Modal>
@@ -76,3 +74,5 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
 
   return [ModalWrapper, open, close, isOpen];
 };
+
+export { ModalConfig } from './components/ModalConfig';
