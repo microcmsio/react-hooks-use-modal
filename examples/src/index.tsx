@@ -7,7 +7,11 @@ import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/ren
 import { ModalWrapper as ModalConfigModal } from './js/modal-config';
 
 const CurrentModal = () => {
-  switch (window.location.pathname.replace(/\/$/, '')) {
+  switch (
+    window.location.pathname
+      .replace(/^\/react-hooks-use-modal/, '')
+      .replace(/\/$/, '')
+  ) {
     case '/close-button': {
       return <CloseButtonModal />;
     }
