@@ -4,7 +4,7 @@ interface DefaultCloseButtonProps {
   onClose: () => void;
 }
 
-const closeButtonStyle: React.CSSProperties = {
+const defaultCloseButtonStyle: React.CSSProperties = {
   // reset
   backgroundColor: 'transparent',
   border: 'none',
@@ -31,7 +31,7 @@ export const DefaultCloseButton: React.FC<DefaultCloseButtonProps> = ({
   return (
     <button
       type="button"
-      style={closeButtonStyle}
+      style={defaultCloseButtonStyle}
       onClick={onClose}
       aria-label="close"
     >
