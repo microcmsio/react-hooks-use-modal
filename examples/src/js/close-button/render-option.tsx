@@ -1,0 +1,43 @@
+import React from 'react';
+import { useModal } from '../../../../src';
+
+const modalStyle: React.CSSProperties = {
+  backgroundColor: '#fff',
+  padding: '60px 100px',
+  borderRadius: '10px',
+};
+
+export const Modal = () => {
+  const [Modal, open, , isOpen] = useModal('root', {
+    showCloseButton: true,
+    renderCloseButton: (close) => (
+      <button
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: '20px',
+          margin: '0 auto',
+          width: '100px',
+        }}
+        onClick={close}
+        type="button"
+      >
+        Close
+      </button>
+    ),
+  });
+
+  return (
+    <div>
+      <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
+      <button onClick={open}>OPEN</button>
+      <Modal>
+        <div style={modalStyle}>
+          <h1>Title</h1>
+          <p>This is a customizable modal.</p>
+        </div>
+      </Modal>
+    </div>
+  );
+};

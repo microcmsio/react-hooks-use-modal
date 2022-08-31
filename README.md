@@ -35,7 +35,7 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions? })
+### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions?, showCloseButton?, renderCloseButton? })
 
 `ModalComponent`
 Modal component that displays children in the screen center.
@@ -61,7 +61,6 @@ Default value is false.
 
 `focusTrapOptions`
 Override the focus-trap options used internally.
-Details are [here](https://github.com/focus-trap/focus-trap#createoptions).
 For example, to prevent a modal from closing when a non-modal element is clicked, do the following
 
 ```jsx
@@ -69,6 +68,38 @@ useModal('root', {
   focusTrapOptions: {
     clickOutsideDeactivates: false,
   },
+});
+```
+
+`showCloseButton`
+Optional to choose whether to add a close button in the upper right corner.
+Default value is false.
+
+`renderCloseButton`
+Type: (close: () => void) => React.ReactElement
+Optional.
+Can be specified when `showCloseButton` is true, allowing you to override the default close button and implement your own close button.
+Use the following
+
+```jsx
+useModal('root', {
+  showCloseButton: true,
+  renderCloseButton: (close) => (
+    <button
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: '20px',
+        margin: '0 auto',
+        width: '100px',
+      }}
+      onClick={close}
+      type="button"
+    >
+      Close
+    </button>
+  ),
 });
 ```
 

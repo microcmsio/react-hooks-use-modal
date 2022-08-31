@@ -1,5 +1,5 @@
 import { Options as FocusTrapOptions } from 'focus-trap';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useBodyScrollLock } from './useBodyScrollLock';
@@ -12,12 +12,25 @@ export interface ModalProps {
   elementId: 'root' | string;
   preventScroll: boolean;
   focusTrapOptions: FocusTrapOptions;
+  closeButton: React.ReactElement | null;
 }
 
-export interface ModalOptions {
+interface DefaultCloseButtonProps {
+  onClose: () => void;
+}
+
+export type ModalOptions = {
   preventScroll?: boolean;
   focusTrapOptions?: FocusTrapOptions;
-}
+} & (
+  | {
+      showCloseButton?: false;
+    }
+  | {
+      showCloseButton: true;
+      renderCloseButton?: (close: () => void) => React.ReactElement;
+    }
+);
 
 export type UseModal = (
   elementId: string,
@@ -56,6 +69,40 @@ const containerStyle: React.CSSProperties = {
   zIndex: 100001,
 };
 
+const closeButtonStyle: React.CSSProperties = {
+  // reset
+  backgroundColor: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+  padding: 0,
+  appearance: 'none',
+
+  position: 'absolute',
+  right: 0,
+  top: 0,
+  width: '40px',
+  height: '40px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '28px',
+  color: '#fff',
+  transform: 'translateX(100%)',
+};
+
+const DefaultCloseButton: React.FC<DefaultCloseButtonProps> = ({ onClose }) => {
+  return (
+    <button
+      type="button"
+      style={closeButtonStyle}
+      onClick={onClose}
+      aria-label="close"
+    >
+      ×
+    </button>
+  );
+};
+
 const Modal: React.FC<ModalProps> = ({
   children,
   isOpen,
@@ -63,6 +110,7 @@ const Modal: React.FC<ModalProps> = ({
   elementId = 'root',
   preventScroll,
   focusTrapOptions,
+  closeButton,
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   useFocusTrap(dialogRef, isOpen, {
@@ -87,6 +135,7 @@ const Modal: React.FC<ModalProps> = ({
         tabIndex={-1}
       >
         {children}
+        {closeButton}
       </div>
     </div>,
     document.getElementById(elementId) as HTMLElement
@@ -94,7 +143,7 @@ const Modal: React.FC<ModalProps> = ({
 };
 
 export const useModal: UseModal = (elementId = 'root', options = {}) => {
-  const { preventScroll = false, focusTrapOptions = {} } = options;
+  const { preventScroll = false, focusTrapOptions = {}, ...rest } = options;
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const open = useCallback(() => {
@@ -105,6 +154,16 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
     setOpen(false);
   }, [setOpen]);
 
+  const closeButton: ModalProps['closeButton'] = useMemo(() => {
+    return rest.showCloseButton ? (
+      rest.renderCloseButton !== undefined ? (
+        rest.renderCloseButton(close)
+      ) : (
+        <DefaultCloseButton onClose={close} />
+      )
+    ) : null;
+  }, [close, rest]);
+
   const ModalWrapper = useCallback(
     ({ children }) => {
       return (
@@ -114,12 +173,13 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
           elementId={elementId}
           preventScroll={preventScroll}
           focusTrapOptions={focusTrapOptions}
+          closeButton={closeButton}
         >
           {children}
         </Modal>
       );
     },
-    [close, elementId, focusTrapOptions, isOpen, preventScroll]
+    [close, closeButton, elementId, focusTrapOptions, isOpen, preventScroll]
   );
 
   return [ModalWrapper, open, close, isOpen];

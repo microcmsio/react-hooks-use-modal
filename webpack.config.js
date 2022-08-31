@@ -1,9 +1,17 @@
+const fs = require('fs');
 const path = require('path');
+
+const globby = require('globby');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
-  template: path.join(__dirname, 'examples/src/index.html'),
-  filename: './index.html',
-});
+
+const htmlWebpackPlugins = globby.sync(['examples/src/**/index.html']).map(
+  (filePath) =>
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, filePath),
+      filename: filePath.replace('examples/src/', './'),
+    })
+);
+
 module.exports = {
   entry: path.join(__dirname, 'examples/src/index.tsx'),
   output: {
@@ -26,7 +34,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [htmlWebpackPlugin],
+  plugins: [...htmlWebpackPlugins],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
