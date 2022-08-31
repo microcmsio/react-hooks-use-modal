@@ -35,7 +35,10 @@ const Wrapper = ({ children }: PropsWithChildren<{}>) => {
       {children}
       <nav style={{ marginTop: '40px' }}>
         {routes.map((route, i) => (
-          <a href={route} style={{ marginLeft: i !== 0 ? '10px' : '' }}>
+          <a
+            href={`/react-hooks-use-modal${route}`}
+            style={{ marginLeft: i !== 0 ? '10px' : '' }}
+          >
             {route}
           </a>
         ))}
