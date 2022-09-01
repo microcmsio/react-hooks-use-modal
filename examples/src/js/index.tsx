@@ -9,12 +9,7 @@ const modalStyle: React.CSSProperties = {
 };
 
 export const Modal = () => {
-  const [Modal, open, close, isOpen] = useModal('root', {
-    preventScroll: true,
-    focusTrapOptions: {
-      clickOutsideDeactivates: false,
-    },
-  });
+  const [Modal, open, close, isOpen] = useModal('root');
 
   return (
     <div>
