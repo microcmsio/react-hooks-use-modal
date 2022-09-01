@@ -2,11 +2,11 @@ import React, { PropsWithChildren } from 'react';
 import { ModalOptions } from '..';
 import { ModalConfigContext } from '../hooks/useModalConfig';
 
-interface ModalConfigProps {
+interface ModalProviderProps {
   value: ModalOptions;
 }
 
-export const ModalConfig: React.FC<PropsWithChildren<ModalConfigProps>> = ({
+export const ModalProvider: React.FC<PropsWithChildren<ModalProviderProps>> = ({
   value,
   children,
 }) => {

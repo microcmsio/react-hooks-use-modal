@@ -76,4 +76,4 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
   return [ModalWrapper, open, close, isOpen];
 };
 
-export { ModalConfig } from './components/ModalConfig';
+export { ModalProvider } from './components/ModalProvider';

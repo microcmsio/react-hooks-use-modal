@@ -6,5 +6,5 @@ module.exports = [
     path: '/close-button/render-option',
     title: 'useModal with renderCloseButton option example',
   },
-  { path: '/modal-config', title: 'useModal with ModalConfig example' },
+  { path: '/modal-provider', title: 'useModal with ModalProvider example' },
 ];
