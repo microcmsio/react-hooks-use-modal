@@ -7,7 +7,11 @@ import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/ren
 import { ModalWrapper as ModalConfigModal } from './js/modal-config';
 
 const CurrentModal = () => {
-  switch (window.location.pathname.replace(/\/$/, '')) {
+  switch (
+    window.location.pathname
+      .replace(/^\/react-hooks-use-modal/, '')
+      .replace(/\/$/, '')
+  ) {
     case '/close-button': {
       return <CloseButtonModal />;
     }
@@ -35,7 +39,10 @@ const Wrapper = ({ children }: PropsWithChildren<{}>) => {
       {children}
       <nav style={{ marginTop: '40px' }}>
         {routes.map((route, i) => (
-          <a href={route} style={{ marginLeft: i !== 0 ? '10px' : '' }}>
+          <a
+            href={`/react-hooks-use-modal${route}`}
+            style={{ marginLeft: i !== 0 ? '10px' : '' }}
+          >
             {route}
           </a>
         ))}
