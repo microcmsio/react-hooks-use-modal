@@ -7,6 +7,7 @@ import { Modal as CommonModal } from './js';
 import { Modal as CloseButtonModal } from './js/close-button';
 import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/render-option';
 import { ModalWrapper as ModalConfigModal } from './js/modal-config';
+import { Modal as PreventScrollModal } from './js/prevent-scroll';
 
 const CurrentModal = () => {
   switch (
@@ -14,6 +15,9 @@ const CurrentModal = () => {
       .replace(/^\/react-hooks-use-modal/, '')
       .replace(/\/$/, '')
   ) {
+    case '/prevent-scroll': {
+      return <PreventScrollModal />;
+    }
     case '/close-button': {
       return <CloseButtonModal />;
     }
