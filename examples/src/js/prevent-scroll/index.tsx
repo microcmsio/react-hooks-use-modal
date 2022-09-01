@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useModal } from '../../../src';
+import { useModal } from '../../../../src';
 
 const modalStyle: React.CSSProperties = {
   backgroundColor: '#fff',
@@ -9,7 +9,9 @@ const modalStyle: React.CSSProperties = {
 };
 
 export const Modal = () => {
-  const [Modal, open, close, isOpen] = useModal('root');
+  const [Modal, open, close, isOpen] = useModal('root', {
+    preventScroll: true,
+  });
 
   return (
     <div>

@@ -1,14 +1,27 @@
-const fs = require('fs');
 const path = require('path');
 
-const globby = require('globby');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const routes = require('./examples-routes');
 
-const htmlWebpackPlugins = globby.sync(['examples/src/**/index.html']).map(
-  (filePath) =>
+const htmlWebpackPlugins = routes.map(
+  ({ path, title }) =>
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, filePath),
-      filename: filePath.replace('examples/src/', './'),
+      templateContent: `
+        <html>
+          <head>
+            <meta charset="utf-8" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            />
+          </head>
+          <body>
+            <noscript> You need to enable JavaScript to run this app. </noscript>
+            <div id="root"></div>
+          </body>
+        </html>`,
+      filename: '.' + path + '/index.html',
+      title,
     })
 );
 
@@ -17,6 +30,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'examples/dist'),
     filename: 'bundle.js',
+    publicPath: '/react-hooks-use-modal',
   },
   module: {
     rules: [
