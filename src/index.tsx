@@ -40,7 +40,7 @@ export interface ModalWrapperProps {
 }
 
 export type UseModal = (
-  elementId: string,
+  elementId?: string,
   options?: UseModalOptions
 ) => [
   ModalWrapper: React.FC<ModalWrapperProps>,
