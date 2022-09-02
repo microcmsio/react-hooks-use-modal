@@ -105,12 +105,12 @@ useModal('root', {
 
 ## Global Settings
 
-The `ModalConfig` component allows you to apply a common default configuration to all `useModal` hooks.
+The `ModalProvider` component allows you to apply a common default configuration to all `useModal` hooks.
 
 ```jsx
-<ModalConfig value={options}>
+<ModalProvider value={options}>
   <Component />
-</ModalConfig>
+</ModalProvider>
 ```
 
 The following example sets all `useModal` hooks to not scroll outside the modal by default.
@@ -135,14 +135,14 @@ const Component2 = () => {
 
 const App = () => {
   return (
-    <ModalConfig
+    <ModalProvider
       value={{
         preventScroll: true,
       }}
     >
       <Component1 />
       <Component2 />
-    </ModalConfig>
+    </ModalProvider>
   );
 };
 ```

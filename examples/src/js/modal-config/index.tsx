@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalConfig, useModal } from '../../../../src';
+import { ModalProvider, useModal } from '../../../../src';
 
 const modalStyle: React.CSSProperties = {
   backgroundColor: '#fff',
@@ -48,7 +48,7 @@ const ModalWithOverrideOptions = () => {
 
 export const ModalWrapper = () => {
   return (
-    <ModalConfig
+    <ModalProvider
       value={{
         focusTrapOptions: {
           clickOutsideDeactivates: true,
@@ -57,6 +57,6 @@ export const ModalWrapper = () => {
     >
       <Modal />
       <ModalWithOverrideOptions />
-    </ModalConfig>
+    </ModalProvider>
   );
 };

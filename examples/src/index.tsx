@@ -6,7 +6,7 @@ import routes from '../../examples-routes';
 import { Modal as CommonModal } from './js';
 import { Modal as CloseButtonModal } from './js/close-button';
 import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/render-option';
-import { ModalWrapper as ModalConfigModal } from './js/modal-config';
+import { ModalWrapper as ModalProviderModal } from './js/modal-config';
 import { Modal as PreventScrollModal } from './js/prevent-scroll';
 
 const CurrentModal = () => {
@@ -24,8 +24,8 @@ const CurrentModal = () => {
     case '/close-button/render-option': {
       return <CloseButtonWithRenderOptionModal />;
     }
-    case '/modal-config': {
-      return <ModalConfigModal />;
+    case '/modal-provider': {
+      return <ModalProviderModal />;
     }
     default: {
       return <CommonModal />;
