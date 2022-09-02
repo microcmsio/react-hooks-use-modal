@@ -8,9 +8,7 @@ const Modal = () => {
     <div>
       <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
-      <Modal>
-        <h1>Title</h1>
-        <p>This is a customizable modal.</p>
+      <Modal title="Title" description="This is a customizable modal.">
         <button onClick={close}>CLOSE</button>
       </Modal>
     </div>
@@ -19,19 +17,19 @@ const Modal = () => {
 const ModalWithOverrideOptions = () => {
   const [Modal, open, close, isOpen] = useModal('root', {
     components: {
-      Modal: ({ Modal, children }) => {
+      Modal: ({ title, description, children }) => {
         return (
-          <Modal
+          <div
             style={{
-              position: 'relative',
-              zIndex: 100001,
               padding: '60px 100px',
-              backgroundColor: 'cyan',
+              backgroundColor: 'cyan', // override
               borderRadius: '10px',
             }}
           >
+            <h1>{title}</h1>
+            <p>{description}</p>
             {children}
-          </Modal>
+          </div>
         );
       },
     },
@@ -41,9 +39,7 @@ const ModalWithOverrideOptions = () => {
     <div style={{ marginTop: '40px' }}>
       <div>Overrided style modal is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
-      <Modal>
-        <h1>Title</h1>
-        <p>This is a customizable modal.</p>
+      <Modal title="Title" description="This is a customizable modal.">
         <button onClick={close}>CLOSE</button>
       </Modal>
     </div>
@@ -58,19 +54,19 @@ export const ModalWrapper = () => {
           clickOutsideDeactivates: true,
         },
         components: {
-          Modal: ({ Modal, children }) => {
+          Modal: ({ title, description, children }) => {
             return (
-              <Modal
+              <div
                 style={{
-                  position: 'relative',
-                  zIndex: 100001,
                   padding: '60px 100px',
                   backgroundColor: '#fff',
                   borderRadius: '10px',
                 }}
               >
+                <h1>{title}</h1>
+                <p>{description}</p>
                 {children}
-              </Modal>
+              </div>
             );
           },
         },

@@ -1,17 +1,18 @@
 import { Options as FocusTrapOptions } from 'focus-trap';
-import React, { createElement, useRef } from 'react';
+import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalProps, OverlayProps, WrapperProps } from '..';
 
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import { mergeRefs } from '../utils/mergeRefs';
 
 interface ModalWrapperProps {
   children: React.ReactNode;
   isOpen: boolean;
   close: () => void;
   elementId: 'root' | string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   preventScroll: boolean;
   focusTrapOptions: FocusTrapOptions;
   components: {
@@ -26,6 +27,8 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   isOpen,
   close,
   elementId = 'root',
+  title,
+  description,
   preventScroll,
   focusTrapOptions,
   components,
@@ -38,40 +41,24 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   });
   useBodyScrollLock(dialogRef, isOpen, preventScroll);
 
-  const _Wrapper: WrapperProps['Wrapper'] = (props) => {
-    return createElement('div', {
-      ...props,
-    });
-  };
-  const _Overlay: OverlayProps['Overlay'] = (props) => {
-    return createElement('div', {
-      ...props,
-      'aria-hidden': true,
-    });
-  };
-  const _Modal: ModalProps['Modal'] = (props) => {
-    return createElement('div', {
-      ...props,
-      ref: mergeRefs([
-        dialogRef,
-        ...(typeof props.ref !== 'string' && props.ref ? [props.ref] : []),
-      ]),
-      role: 'dialog',
-      'aria-modal': 'true',
-      tabIndex: -1,
-    });
-  };
-
   if (isOpen === false) {
     return null;
   }
 
   return createPortal(
-    <components.Wrapper Wrapper={_Wrapper}>
-      <components.Overlay Overlay={_Overlay} />
-      <components.Modal Modal={_Modal} close={close}>
-        {children}
-      </components.Modal>
+    <components.Wrapper>
+      <components.Overlay />
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+        style={{ position: 'relative' }}
+      >
+        <components.Modal title={title} description={description} close={close}>
+          {children}
+        </components.Modal>
+      </div>
     </components.Wrapper>,
     document.getElementById(elementId) as HTMLElement
   );

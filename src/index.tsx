@@ -11,31 +11,12 @@ import { ModalWrapper } from './components/Modal';
 import { useModalConfig } from './hooks/useModalConfig';
 
 export interface WrapperProps {
-  Wrapper: React.FC<
-    React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDivElement>,
-      HTMLDivElement
-    >
-  >;
   children: React.ReactNode;
 }
 
-export interface OverlayProps {
-  Overlay: React.FC<
-    React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDivElement>,
-      HTMLDivElement
-    >
-  >;
-}
+export interface OverlayProps {}
 
 export interface ModalProps {
-  Modal: React.FC<
-    React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDivElement>,
-      HTMLDivElement
-    >
-  >;
   title?: React.ReactNode;
   description?: React.ReactNode;
   close: () => void;
@@ -52,11 +33,17 @@ export interface UseModalOptions {
   };
 }
 
+export interface ModalWrapperProps {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  children: React.ReactNode;
+}
+
 export type UseModal = (
   elementId: string,
   options?: UseModalOptions
 ) => [
-  ModalWrapper: React.FC<{ children: React.ReactNode }>,
+  ModalWrapper: React.FC<ModalWrapperProps>,
   open: () => void,
   close: () => void,
   isOpen: boolean
@@ -82,13 +69,15 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
   const Overlay = components.Overlay ?? DefaultOverlay;
   const Modal = components.Modal ?? DefaultModal;
 
-  const _ModalWrapper = useCallback(
-    ({ children }: { children: React.ReactNode }) => {
+  const _ModalWrapper: React.FC<ModalWrapperProps> = useCallback(
+    ({ title, description, children }) => {
       return (
         <ModalWrapper
           isOpen={isOpen}
           close={close}
           elementId={elementId}
+          title={title}
+          description={description}
           preventScroll={preventScroll}
           focusTrapOptions={focusTrapOptions}
           components={{ Modal, Overlay, Wrapper }}

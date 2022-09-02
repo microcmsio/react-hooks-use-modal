@@ -1,5 +1,5 @@
-import React from 'react';
-import { ModalProps, OverlayProps, WrapperProps } from '..';
+import React, { Fragment } from 'react';
+import { ModalProps, WrapperProps } from '..';
 
 const wrapperStyle: React.CSSProperties = {
   position: 'fixed',
@@ -13,8 +13,8 @@ const wrapperStyle: React.CSSProperties = {
   zIndex: 1000,
 };
 
-const Wrapper: React.FC<WrapperProps> = ({ Wrapper, children }) => {
-  return <Wrapper style={wrapperStyle}>{children}</Wrapper>;
+const Wrapper: React.FC<WrapperProps> = ({ children }) => {
+  return <div style={wrapperStyle}>{children}</div>;
 };
 
 const overlayStyle: React.CSSProperties = {
@@ -24,20 +24,14 @@ const overlayStyle: React.CSSProperties = {
   bottom: 0,
   right: 0,
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  zIndex: 100000,
 };
 
-const Overlay: React.FC<OverlayProps> = ({ Overlay }) => {
-  return <Overlay style={overlayStyle} />;
+const Overlay: React.FC = () => {
+  return <div style={overlayStyle} />;
 };
 
-const modalStyle: React.CSSProperties = {
-  position: 'relative',
-  zIndex: 100001,
-};
-
-const Modal: React.FC<ModalProps> = ({ Modal, children }) => {
-  return <Modal style={modalStyle}>{children}</Modal>;
+const Modal: React.FC<ModalProps> = ({ children }) => {
+  return <Fragment>{children}</Fragment>;
 };
 
 export {
