@@ -167,10 +167,7 @@ const Component2 = () => {
 
 const App = () => {
   return (
-    <ModalProvider
-      preventScroll
-      focutTrapOptions={{ clickOutsideDeactivates: false }}
-    >
+    <ModalProvider preventScroll>
       <Component1 />
       <Component2 />
     </ModalProvider>
