@@ -35,7 +35,7 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions?, showCloseButton?, renderCloseButton? })
+### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions?, components? })
 
 `ModalComponent`
 Type: React.FC<{ title?: React.ReactNode; description?: React.ReactNode, children?: React.ReactNode }>
