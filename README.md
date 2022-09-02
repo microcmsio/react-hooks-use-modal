@@ -140,7 +140,7 @@ Combined with `ModalProvider` (described below), you can specify the default sty
 The `ModalProvider` component allows you to apply a common default configuration to all `useModal` hooks.
 
 ```jsx
-<ModalProvider value={options}>
+<ModalProvider {...options}>
   <Component />
 </ModalProvider>
 ```
