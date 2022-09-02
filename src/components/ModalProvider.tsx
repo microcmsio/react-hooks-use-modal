@@ -1,17 +1,17 @@
-import React, { PropsWithChildren } from 'react';
-import { ModalOptions } from '..';
+import React from 'react';
+import { UseModalOptions } from '..';
 import { ModalConfigContext } from '../hooks/useModalConfig';
 
-interface ModalProviderProps {
-  value: ModalOptions;
+interface ModalProviderProps extends UseModalOptions {
+  children?: React.ReactNode;
 }
 
-export const ModalProvider: React.FC<PropsWithChildren<ModalProviderProps>> = ({
-  value,
+export const ModalProvider: React.FC<ModalProviderProps> = ({
   children,
+  ...props
 }) => {
   return (
-    <ModalConfigContext.Provider value={value}>
+    <ModalConfigContext.Provider value={props}>
       {children}
     </ModalConfigContext.Provider>
   );

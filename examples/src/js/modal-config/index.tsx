@@ -49,10 +49,8 @@ const ModalWithOverrideOptions = () => {
 export const ModalWrapper = () => {
   return (
     <ModalProvider
-      value={{
-        focusTrapOptions: {
-          clickOutsideDeactivates: true,
-        },
+      focusTrapOptions={{
+        clickOutsideDeactivates: true,
       }}
     >
       <Modal />

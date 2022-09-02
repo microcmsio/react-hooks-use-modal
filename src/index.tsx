@@ -1,29 +1,49 @@
 import deepmerge from 'deepmerge';
 import { Options as FocusTrapOptions } from 'focus-trap';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import {
+  DefaultModal,
+  DefaultOverlay,
+  DefaultWrapper,
+} from './components/DefaultComponents';
 
-import { DefaultCloseButton } from './components/DefaultCloseButton';
-import { Modal, ModalProps } from './components/Modal';
+import { ModalWrapper } from './components/Modal';
 import { useModalConfig } from './hooks/useModalConfig';
 
-export type ModalOptions = {
+export interface WrapperProps {
+  children: React.ReactNode;
+}
+
+export interface OverlayProps {}
+
+export interface ModalProps {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  close: () => void;
+  children: React.ReactNode;
+}
+
+export interface UseModalOptions {
   preventScroll?: boolean;
   focusTrapOptions?: FocusTrapOptions;
-} & (
-  | {
-      showCloseButton?: false;
-    }
-  | {
-      showCloseButton: true;
-      renderCloseButton?: (close: () => void) => React.ReactElement;
-    }
-);
+  components?: {
+    Wrapper?: React.ComponentType<WrapperProps>;
+    Overlay?: React.ComponentType<OverlayProps>;
+    Modal?: React.ComponentType<ModalProps>;
+  };
+}
+
+export interface ModalWrapperProps {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  children: React.ReactNode;
+}
 
 export type UseModal = (
-  elementId: string,
-  options?: ModalOptions
+  elementId?: string,
+  options?: UseModalOptions
 ) => [
-  ModalWrapper: React.FC<{ children: React.ReactNode }>,
+  ModalWrapper: React.FC<ModalWrapperProps>,
   open: () => void,
   close: () => void,
   isOpen: boolean
@@ -33,8 +53,8 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
   const {
     preventScroll = false,
     focusTrapOptions = {},
-    ...rest
-  } = deepmerge<ModalOptions>(useModalConfig(), options);
+    components = {},
+  } = deepmerge<UseModalOptions>(useModalConfig(), options);
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const open = useCallback(() => {
@@ -45,35 +65,40 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
     setOpen(false);
   }, [setOpen]);
 
-  const closeButton: ModalProps['closeButton'] = useMemo(() => {
-    return rest.showCloseButton ? (
-      rest.renderCloseButton !== undefined ? (
-        rest.renderCloseButton(close)
-      ) : (
-        <DefaultCloseButton onClose={close} />
-      )
-    ) : null;
-  }, [close, rest]);
+  const Wrapper = components.Wrapper ?? DefaultWrapper;
+  const Overlay = components.Overlay ?? DefaultOverlay;
+  const Modal = components.Modal ?? DefaultModal;
 
-  const ModalWrapper = useCallback(
-    ({ children }) => {
+  const _ModalWrapper: React.FC<ModalWrapperProps> = useCallback(
+    ({ title, description, children }) => {
       return (
-        <Modal
+        <ModalWrapper
           isOpen={isOpen}
           close={close}
           elementId={elementId}
+          title={title}
+          description={description}
           preventScroll={preventScroll}
           focusTrapOptions={focusTrapOptions}
-          closeButton={closeButton}
+          components={{ Modal, Overlay, Wrapper }}
         >
           {children}
-        </Modal>
+        </ModalWrapper>
       );
     },
-    [close, closeButton, elementId, focusTrapOptions, isOpen, preventScroll]
+    [
+      Modal,
+      Overlay,
+      Wrapper,
+      close,
+      elementId,
+      focusTrapOptions,
+      isOpen,
+      preventScroll,
+    ]
   );
 
-  return [ModalWrapper, open, close, isOpen];
+  return [_ModalWrapper, open, close, isOpen];
 };
 
 export { ModalProvider } from './components/ModalProvider';

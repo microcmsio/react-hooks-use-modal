@@ -4,8 +4,7 @@ import { render } from 'react-dom';
 import routes from '../../examples-routes';
 
 import { Modal as CommonModal } from './js';
-import { Modal as CloseButtonModal } from './js/close-button';
-import { Modal as CloseButtonWithRenderOptionModal } from './js/close-button/render-option';
+import { ModalWrapper as ComponentsOptionModal } from './js/components-option';
 import { ModalWrapper as ModalProviderModal } from './js/modal-config';
 import { Modal as PreventScrollModal } from './js/prevent-scroll';
 
@@ -18,14 +17,11 @@ const CurrentModal = () => {
     case '/prevent-scroll': {
       return <PreventScrollModal />;
     }
-    case '/close-button': {
-      return <CloseButtonModal />;
-    }
-    case '/close-button/render-option': {
-      return <CloseButtonWithRenderOptionModal />;
-    }
     case '/modal-provider': {
       return <ModalProviderModal />;
+    }
+    case '/components-option': {
+      return <ComponentsOptionModal />;
     }
     default: {
       return <CommonModal />;
@@ -40,6 +36,7 @@ const Wrapper = ({ children }: PropsWithChildren<{}>) => {
       <nav style={{ marginTop: '40px' }}>
         {routes.map(({ path }, i) => (
           <a
+            key={path}
             href={`/react-hooks-use-modal${path}`}
             style={{ marginLeft: i !== 0 ? '10px' : '' }}
           >

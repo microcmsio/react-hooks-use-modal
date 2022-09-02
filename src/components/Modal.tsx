@@ -1,55 +1,37 @@
 import { Options as FocusTrapOptions } from 'focus-trap';
 import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { ModalProps, OverlayProps, WrapperProps } from '..';
 
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 
-export interface ModalProps {
+interface ModalWrapperProps {
   children: React.ReactNode;
   isOpen: boolean;
   close: () => void;
   elementId: 'root' | string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   preventScroll: boolean;
   focusTrapOptions: FocusTrapOptions;
-  closeButton: React.ReactElement | null;
+  components: {
+    Wrapper: React.ComponentType<WrapperProps>;
+    Overlay: React.ComponentType<OverlayProps>;
+    Modal: React.ComponentType<ModalProps>;
+  };
 }
 
-const wrapperStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 1000,
-};
-
-const overlayStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  zIndex: 100000,
-};
-
-const containerStyle: React.CSSProperties = {
-  position: 'relative',
-  zIndex: 100001,
-};
-
-export const Modal: React.FC<ModalProps> = ({
+export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   children,
   isOpen,
   close,
   elementId = 'root',
+  title,
+  description,
   preventScroll,
   focusTrapOptions,
-  closeButton,
+  components,
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   useFocusTrap(dialogRef, isOpen, {
@@ -64,19 +46,20 @@ export const Modal: React.FC<ModalProps> = ({
   }
 
   return createPortal(
-    <div style={wrapperStyle}>
-      <div style={overlayStyle} />
+    <components.Wrapper>
+      <components.Overlay />
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        style={containerStyle}
         tabIndex={-1}
+        style={{ position: 'relative' }}
       >
-        {children}
-        {closeButton}
+        <components.Modal title={title} description={description} close={close}>
+          {children}
+        </components.Modal>
       </div>
-    </div>,
+    </components.Wrapper>,
     document.getElementById(elementId) as HTMLElement
   );
 };
