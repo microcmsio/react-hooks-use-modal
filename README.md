@@ -38,7 +38,9 @@ render(<App />, document.getElementById('root'));
 ### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions?, showCloseButton?, renderCloseButton? })
 
 `ModalComponent`
+Type: React.FC<{ title?: React.ReactNode; description?: React.ReactNode, children?: React.ReactNode }>
 Modal component that displays children in the screen center.
+If you specify `title` and `description`, you must implement custom components with the `components` option's `Modal` property and render in them.
 
 `openFunc`
 A function to open modal.
@@ -71,37 +73,67 @@ useModal('root', {
 });
 ```
 
-`showCloseButton`
-Optional to choose whether to add a close button in the upper right corner.
-Default value is false.
-
-`renderCloseButton`
-Type: (close: () => void) => React.ReactElement
+`components`
 Optional.
-Can be specified when `showCloseButton` is true, allowing you to override the default close button and implement your own close button.
-Use the following
+This is an option to customize the `ModalWrapper` returned by useModal.
+Use as follows
 
 ```jsx
 useModal('root', {
-  showCloseButton: true,
-  renderCloseButton: (close) => (
-    <button
-      style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: '20px',
-        margin: '0 auto',
-        width: '100px',
-      }}
-      onClick={close}
-      type="button"
-    >
-      Close
-    </button>
-  ),
+  components: {
+    Modal: ({ title, description, children }) => {
+      return (
+        <div
+          style={{
+            padding: '60px 100px',
+            backgroundColor: '#fff',
+            borderRadius: '10px',
+          }}
+        >
+          {title && <h1>{title}</h1>}
+          {description && <p>{description}</p>}
+          {children}
+        </div>
+      );
+    },
+    Overlay: () => {
+      return (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}
+        />
+      );
+    },
+    Wrapper: ({ children }) => {
+      return (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+          }}
+        >
+          {children}
+        </div>
+      );
+    },
+  },
 });
 ```
+
+Combined with `ModalProvider` (described below), you can specify the default style for all `useModal` in the project.
 
 ## Global Settings
 
@@ -136,9 +168,8 @@ const Component2 = () => {
 const App = () => {
   return (
     <ModalProvider
-      value={{
-        preventScroll: true,
-      }}
+      preventScroll
+      focutTrapOptions={{ clickOutsideDeactivates: false }}
     >
       <Component1 />
       <Component2 />
