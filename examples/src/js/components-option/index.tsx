@@ -26,8 +26,8 @@ const ModalWithOverrideOptions = () => {
               borderRadius: '10px',
             }}
           >
-            <h1>{title}</h1>
-            <p>{description}</p>
+            {title && <h1>{title}</h1>}
+            {description && <p>{description}</p>}
             {children}
           </div>
         );
@@ -49,26 +49,24 @@ const ModalWithOverrideOptions = () => {
 export const ModalWrapper = () => {
   return (
     <ModalProvider
-      value={{
-        focusTrapOptions: {
-          clickOutsideDeactivates: true,
-        },
-        components: {
-          Modal: ({ title, description, children }) => {
-            return (
-              <div
-                style={{
-                  padding: '60px 100px',
-                  backgroundColor: '#fff',
-                  borderRadius: '10px',
-                }}
-              >
-                <h1>{title}</h1>
-                <p>{description}</p>
-                {children}
-              </div>
-            );
-          },
+      focusTrapOptions={{
+        clickOutsideDeactivates: true,
+      }}
+      components={{
+        Modal: ({ title, description, children }) => {
+          return (
+            <div
+              style={{
+                padding: '60px 100px',
+                backgroundColor: '#fff',
+                borderRadius: '10px',
+              }}
+            >
+              {title && <h1>{title}</h1>}
+              {description && <p>{description}</p>}
+              {children}
+            </div>
+          );
         },
       }}
     >
