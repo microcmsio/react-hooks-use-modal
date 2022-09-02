@@ -1,55 +1,34 @@
 import { Options as FocusTrapOptions } from 'focus-trap';
-import React, { useRef } from 'react';
+import React, { createElement, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { ModalProps, OverlayProps, WrapperProps } from '..';
 
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import { useFocusTrap } from '../hooks/useFocusTrap';
+import { mergeRefs } from '../utils/mergeRefs';
 
-export interface ModalProps {
+interface ModalWrapperProps {
   children: React.ReactNode;
   isOpen: boolean;
   close: () => void;
   elementId: 'root' | string;
   preventScroll: boolean;
   focusTrapOptions: FocusTrapOptions;
-  closeButton: React.ReactElement | null;
+  components: {
+    Wrapper: React.ComponentType<WrapperProps>;
+    Overlay: React.ComponentType<OverlayProps>;
+    Modal: React.ComponentType<ModalProps>;
+  };
 }
 
-const wrapperStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 1000,
-};
-
-const overlayStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  zIndex: 100000,
-};
-
-const containerStyle: React.CSSProperties = {
-  position: 'relative',
-  zIndex: 100001,
-};
-
-export const Modal: React.FC<ModalProps> = ({
+export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   children,
   isOpen,
   close,
   elementId = 'root',
   preventScroll,
   focusTrapOptions,
-  closeButton,
+  components,
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   useFocusTrap(dialogRef, isOpen, {
@@ -59,24 +38,41 @@ export const Modal: React.FC<ModalProps> = ({
   });
   useBodyScrollLock(dialogRef, isOpen, preventScroll);
 
+  const _Wrapper: WrapperProps['Wrapper'] = (props) => {
+    return createElement('div', {
+      ...props,
+    });
+  };
+  const _Overlay: OverlayProps['Overlay'] = (props) => {
+    return createElement('div', {
+      ...props,
+      'aria-hidden': true,
+    });
+  };
+  const _Modal: ModalProps['Modal'] = (props) => {
+    return createElement('div', {
+      ...props,
+      ref: mergeRefs([
+        dialogRef,
+        ...(typeof props.ref !== 'string' && props.ref ? [props.ref] : []),
+      ]),
+      role: 'dialog',
+      'aria-modal': 'true',
+      tabIndex: -1,
+    });
+  };
+
   if (isOpen === false) {
     return null;
   }
 
   return createPortal(
-    <div style={wrapperStyle}>
-      <div style={overlayStyle} />
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        style={containerStyle}
-        tabIndex={-1}
-      >
+    <components.Wrapper Wrapper={_Wrapper}>
+      <components.Overlay Overlay={_Overlay} />
+      <components.Modal Modal={_Modal} close={close}>
         {children}
-        {closeButton}
-      </div>
-    </div>,
+      </components.Modal>
+    </components.Wrapper>,
     document.getElementById(elementId) as HTMLElement
   );
 };

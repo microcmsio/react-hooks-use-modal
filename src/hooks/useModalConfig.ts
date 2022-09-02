@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
-import { ModalOptions } from '..';
+import { UseModalOptions } from '..';
 
-export const ModalConfigContext = createContext<ModalOptions>({});
+export const ModalConfigContext = createContext<UseModalOptions>({});
 
 export const useModalConfig = () => {
   return useContext(ModalConfigContext);

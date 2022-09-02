@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
-import { ModalOptions } from '..';
+import { UseModalOptions } from '..';
 import { ModalConfigContext } from '../hooks/useModalConfig';
 
 interface ModalProviderProps {
-  value: ModalOptions;
+  value: UseModalOptions;
 }
 
 export const ModalProvider: React.FC<PropsWithChildren<ModalProviderProps>> = ({
