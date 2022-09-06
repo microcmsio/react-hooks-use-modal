@@ -1,5 +1,5 @@
 import { Options as FocusTrapOptions } from 'focus-trap';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalProps, OverlayProps, WrapperProps } from '..';
 
@@ -34,11 +34,15 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   components,
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
-  useFocusTrap(dialogRef, isOpen, {
-    onDeactivate: close,
-    clickOutsideDeactivates: true,
-    ...focusTrapOptions,
-  });
+  const _focusTrapOptions = useMemo(
+    () => ({
+      onDeactivate: close,
+      clickOutsideDeactivates: true,
+      ...focusTrapOptions,
+    }),
+    [close, focusTrapOptions]
+  );
+  useFocusTrap(dialogRef, isOpen, _focusTrapOptions);
   useBodyScrollLock(dialogRef, isOpen, preventScroll);
 
   if (isOpen === false) {

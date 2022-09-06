@@ -1,6 +1,5 @@
-import deepmerge from 'deepmerge';
 import { Options as FocusTrapOptions } from 'focus-trap';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   DefaultModal,
   DefaultOverlay,
@@ -49,12 +48,18 @@ export type UseModal = (
   isOpen: boolean
 ];
 
-export const useModal: UseModal = (elementId = 'root', options = {}) => {
-  const {
-    preventScroll = false,
-    focusTrapOptions = {},
-    components = {},
-  } = deepmerge<UseModalOptions>(useModalConfig(), options);
+const defaultOptions: Required<UseModalOptions> = {
+  preventScroll: false,
+  focusTrapOptions: {},
+  components: {},
+};
+
+export const useModal: UseModal = (elementId = 'root', options) => {
+  const modalConfig = useModalConfig();
+  const { preventScroll, focusTrapOptions, components } = useMemo(
+    () => Object.assign({}, defaultOptions, modalConfig, options),
+    [modalConfig, options]
+  );
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const open = useCallback(() => {
@@ -80,7 +85,11 @@ export const useModal: UseModal = (elementId = 'root', options = {}) => {
           description={description}
           preventScroll={preventScroll}
           focusTrapOptions={focusTrapOptions}
-          components={{ Modal, Overlay, Wrapper }}
+          components={{
+            Modal,
+            Overlay,
+            Wrapper,
+          }}
         >
           {children}
         </ModalWrapper>
