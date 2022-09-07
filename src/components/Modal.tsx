@@ -33,7 +33,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   focusTrapOptions,
   components,
 }) => {
-  const dialogRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const _focusTrapOptions = useMemo(
     () => ({
       onDeactivate: close,
@@ -52,8 +52,9 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   return createPortal(
     <components.Wrapper>
       <components.Overlay />
-      <div
+      <dialog
         ref={dialogRef}
+        id="dialog-poc"
         role="dialog"
         aria-modal="true"
         tabIndex={-1}
@@ -62,7 +63,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
         <components.Modal title={title} description={description} close={close}>
           {children}
         </components.Modal>
-      </div>
+      </dialog>
     </components.Wrapper>,
     document.getElementById(elementId) as HTMLElement
   );

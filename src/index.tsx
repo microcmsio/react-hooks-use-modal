@@ -62,8 +62,9 @@ export const useModal: UseModal = (elementId = 'root', options) => {
   );
   const [isOpen, setOpen] = useState<boolean>(false);
 
-  const open = useCallback(() => {
-    setOpen(true);
+  const open = useCallback(async () => {
+    await setOpen(true);
+    document.getElementById('dialog-poc').showModal();
   }, [setOpen]);
 
   const close = useCallback(() => {
