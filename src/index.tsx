@@ -23,6 +23,7 @@ export interface ModalProps {
 }
 
 export interface UseModalOptions {
+  initialValue?: boolean;
   preventScroll?: boolean;
   focusTrapOptions?: FocusTrapOptions;
   components?: {
@@ -49,6 +50,7 @@ export type UseModal = (
 ];
 
 const defaultOptions: Required<UseModalOptions> = {
+  initialValue: false,
   preventScroll: false,
   focusTrapOptions: {},
   components: {},
@@ -56,11 +58,11 @@ const defaultOptions: Required<UseModalOptions> = {
 
 export const useModal: UseModal = (elementId = 'root', options) => {
   const modalConfig = useModalConfig();
-  const { preventScroll, focusTrapOptions, components } = useMemo(
+  const { initialValue, preventScroll, focusTrapOptions, components } = useMemo(
     () => Object.assign({}, defaultOptions, modalConfig, options),
     [modalConfig, options]
   );
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState<boolean>(initialValue);
 
   const open = useCallback(() => {
     setOpen(true);
