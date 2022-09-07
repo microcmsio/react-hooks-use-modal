@@ -15,46 +15,53 @@ export interface WrapperProps {
 
 export interface OverlayProps {}
 
-export interface ModalProps {
+export interface ModalProps<T extends Record<string, unknown>> {
   title?: React.ReactNode;
   description?: React.ReactNode;
   close: () => void;
   children: React.ReactNode;
+  additionalProps?: T;
 }
 
-export interface UseModalOptions {
+export interface UseModalOptions<T extends Record<string, unknown>> {
   preventScroll?: boolean;
   focusTrapOptions?: FocusTrapOptions;
   components?: {
     Wrapper?: React.ComponentType<WrapperProps>;
     Overlay?: React.ComponentType<OverlayProps>;
-    Modal?: React.ComponentType<ModalProps>;
+    Modal?: React.ComponentType<ModalProps<T>>;
   };
 }
 
-export interface ModalWrapperProps {
+export interface ModalWrapperProps<T extends Record<string, unknown>> {
   title?: React.ReactNode;
   description?: React.ReactNode;
   children: React.ReactNode;
+  additionalProps?: T;
 }
 
-export type UseModal = (
-  elementId?: string,
-  options?: UseModalOptions
-) => [
-  ModalWrapper: React.FC<ModalWrapperProps>,
+export type UseModalResult<T extends Record<string, unknown>> = [
+  ModalWrapper: React.FC<ModalWrapperProps<T>>,
   open: () => void,
   close: () => void,
   isOpen: boolean
 ];
 
-const defaultOptions: Required<UseModalOptions> = {
+export type UseModal<T extends Record<string, unknown>> = (
+  elementId?: string,
+  options?: UseModalOptions<T>
+) => UseModalResult<T>;
+
+const defaultOptions: Required<UseModalOptions<{}>> = {
   preventScroll: false,
   focusTrapOptions: {},
   components: {},
 };
 
-export const useModal: UseModal = (elementId = 'root', options) => {
+export const useModal = <T extends Record<string, unknown>>(
+  elementId = 'root',
+  options?: UseModalOptions<T>
+): UseModalResult<T> => {
   const modalConfig = useModalConfig();
   const { preventScroll, focusTrapOptions, components } = useMemo(
     () => Object.assign({}, defaultOptions, modalConfig, options),
@@ -74,8 +81,8 @@ export const useModal: UseModal = (elementId = 'root', options) => {
   const Overlay = components.Overlay ?? DefaultOverlay;
   const Modal = components.Modal ?? DefaultModal;
 
-  const _ModalWrapper: React.FC<ModalWrapperProps> = useCallback(
-    ({ title, description, children }) => {
+  const _ModalWrapper: React.FC<ModalWrapperProps<T>> = useCallback(
+    ({ title, description, children, additionalProps }) => {
       return (
         <ModalWrapper
           isOpen={isOpen}
@@ -90,6 +97,7 @@ export const useModal: UseModal = (elementId = 'root', options) => {
             Overlay,
             Wrapper,
           }}
+          additionalProps={additionalProps}
         >
           {children}
         </ModalWrapper>
