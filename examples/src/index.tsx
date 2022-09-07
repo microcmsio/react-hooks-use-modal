@@ -5,6 +5,7 @@ import routes from '../../examples-routes';
 
 import { Modal as CommonModal } from './js';
 import { ModalWrapper as ComponentsOptionModal } from './js/components-option';
+import { Modal as InitialValueModal } from './js/initial-value';
 import { ModalWrapper as ModalProviderModal } from './js/modal-config';
 import { Modal as PreventScrollModal } from './js/prevent-scroll';
 
@@ -14,6 +15,9 @@ const CurrentModal = () => {
       .replace(/^\/react-hooks-use-modal/, '')
       .replace(/\/$/, '')
   ) {
+    case '/initial-value': {
+      return <InitialValueModal />;
+    }
     case '/prevent-scroll': {
       return <PreventScrollModal />;
     }
