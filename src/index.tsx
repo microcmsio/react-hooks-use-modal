@@ -64,7 +64,7 @@ export const useModal = <T extends Record<string, unknown>>(
   elementId = 'root',
   options?: UseModalOptions<T>
 ): UseModalResult<T> => {
-  const modalConfig = useModalConfig();
+  const modalConfig = useModalConfig<T>();
   const { initialValue, preventScroll, focusTrapOptions, components } = useMemo(
     () => Object.assign({}, defaultOptions, modalConfig, options),
     [modalConfig, options]
