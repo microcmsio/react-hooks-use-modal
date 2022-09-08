@@ -35,7 +35,7 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions?, components? })
+### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { initialValue?, preventScroll?, focusTrapOptions?, components? })
 
 `ModalComponent`
 Type: React.FC<{ title?: React.ReactNode; description?: React.ReactNode, children?: React.ReactNode }>
@@ -56,6 +56,11 @@ Optional.
 Default value is 'root'.
 Modal component uses React-Portal.
 You can specify the output destination domNode with this argument
+
+`initialValue`
+Optional.
+Default value is false.
+This is useful when you want to mount the modal in an open position.
 
 `preventScroll`
 Optional to prevent scrolling while modal is open.
