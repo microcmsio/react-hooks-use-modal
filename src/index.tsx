@@ -24,6 +24,7 @@ export interface ModalProps<T extends Record<string, unknown>> {
 }
 
 export interface UseModalOptions<T extends Record<string, unknown>> {
+  initialValue?: boolean;
   preventScroll?: boolean;
   focusTrapOptions?: FocusTrapOptions;
   components?: {
@@ -53,6 +54,7 @@ export type UseModal<T extends Record<string, unknown>> = (
 ) => UseModalResult<T>;
 
 const defaultOptions: Required<UseModalOptions<{}>> = {
+  initialValue: false,
   preventScroll: false,
   focusTrapOptions: {},
   components: {},
@@ -63,11 +65,11 @@ export const useModal = <T extends Record<string, unknown>>(
   options?: UseModalOptions<T>
 ): UseModalResult<T> => {
   const modalConfig = useModalConfig();
-  const { preventScroll, focusTrapOptions, components } = useMemo(
+  const { initialValue, preventScroll, focusTrapOptions, components } = useMemo(
     () => Object.assign({}, defaultOptions, modalConfig, options),
     [modalConfig, options]
   );
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState<boolean>(initialValue);
 
   const open = useCallback(() => {
     setOpen(true);
