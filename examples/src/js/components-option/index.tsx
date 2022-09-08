@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalProvider, useModal } from '../../../../src';
+import { ModalProps, ModalProvider, useModal } from '../../../../src';
 
 const Modal = () => {
   const [Modal, open, close, isOpen] = useModal('root');
@@ -46,6 +46,80 @@ const ModalWithOverrideOptions = () => {
   );
 };
 
+type AdditionalProps = {
+  footer: React.ReactNode;
+};
+interface OverrideModalProps extends ModalProps<AdditionalProps> {}
+const OverrideModal: React.FC<OverrideModalProps> = ({
+  title,
+  description,
+  children,
+  additionalProps,
+}) => {
+  return (
+    <div
+      style={{
+        position: 'relative',
+        padding: '60px 100px',
+        backgroundColor: 'fff',
+        borderRadius: '10px',
+      }}
+    >
+      <div
+        style={{
+          marginBottom: '60px',
+        }}
+      >
+        {title && <h1>{title}</h1>}
+        {description && <p>{description}</p>}
+      </div>
+      {additionalProps?.footer && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '60px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.1)',
+          }}
+        >
+          {additionalProps.footer}
+        </div>
+      )}
+      {children}
+    </div>
+  );
+};
+
+const ModalWithAdditionalProps = () => {
+  const [Modal, open, close, isOpen] = useModal('root', {
+    components: {
+      Modal: OverrideModal, // The type of `additionalProps` that can be specified for `Modal` is automatically determined according to the type of `components.Modal` props.
+    },
+  });
+
+  return (
+    <div style={{ marginTop: '40px' }}>
+      <div>
+        Modal with `additionalProps` option applied is Open?{' '}
+        {isOpen ? 'Yes' : 'No'}
+      </div>
+      <button onClick={open}>OPEN</button>
+      <Modal
+        title="Title"
+        description="This is a customizable modal."
+        additionalProps={{ footer: <button onClick={close}>CLOSE</button> }}
+      >
+        {''}
+      </Modal>
+    </div>
+  );
+};
+
 export const ModalWrapper = () => {
   return (
     <ModalProvider
@@ -72,6 +146,7 @@ export const ModalWrapper = () => {
     >
       <Modal />
       <ModalWithOverrideOptions />
+      <ModalWithAdditionalProps />
     </ModalProvider>
   );
 };
