@@ -35,12 +35,14 @@ render(<App />, document.getElementById('root'));
 
 ## Syntax
 
-### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { preventScroll?, focusTrapOptions?, components? })
+### [ModalComponent, openFunc, closeFunc, isOpenBool] = useModal(domNode?, { initialValue?, preventScroll?, focusTrapOptions?, components? })
 
 `ModalComponent`
-Type: React.FC<{ title?: React.ReactNode; description?: React.ReactNode, children?: React.ReactNode }>
+Type: React.FC<{ title?: React.ReactNode; description?: React.ReactNode, children?: React.ReactNode, additionalProps?: Record<string, unknown> }>
 Modal component that displays children in the screen center.
-If you specify `title` and `description`, you must implement custom components with the `components` option's `Modal` property and render in them.
+If you specify `title` and `description`, `additionalProps` you must implement custom components with the `components` option's `Modal` property and render in them.
+See EXAMPLE below for details.
+https://github.com/microcmsio/react-hooks-use-modal/blob/master/examples/src/js/components-option/index.tsx
 
 `openFunc`
 A function to open modal.
@@ -56,6 +58,11 @@ Optional.
 Default value is 'root'.
 Modal component uses React-Portal.
 You can specify the output destination domNode with this argument
+
+`initialValue`
+Optional.
+Default value is false.
+This is useful when you want to mount the modal in an open position.
 
 `preventScroll`
 Optional to prevent scrolling while modal is open.

@@ -30,7 +30,9 @@ const Overlay: React.FC = () => {
   return <div style={overlayStyle} />;
 };
 
-const Modal: React.FC<ModalProps> = ({ children }) => {
+const Modal = <T extends Record<string, unknown>>({
+  children,
+}: ModalProps<T>): React.ReactElement | null => {
   return <Fragment>{children}</Fragment>;
 };
 

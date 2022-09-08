@@ -6,7 +6,7 @@ import { ModalProps, OverlayProps, WrapperProps } from '..';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 
-interface ModalWrapperProps {
+interface ModalWrapperProps<T extends Record<string, unknown>> {
   children: React.ReactNode;
   isOpen: boolean;
   close: () => void;
@@ -18,11 +18,12 @@ interface ModalWrapperProps {
   components: {
     Wrapper: React.ComponentType<WrapperProps>;
     Overlay: React.ComponentType<OverlayProps>;
-    Modal: React.ComponentType<ModalProps>;
+    Modal: React.ComponentType<ModalProps<T>>;
   };
+  additionalProps?: T;
 }
 
-export const ModalWrapper: React.FC<ModalWrapperProps> = ({
+export const ModalWrapper = <T extends Record<string, unknown>>({
   children,
   isOpen,
   close,
@@ -32,7 +33,8 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
   preventScroll,
   focusTrapOptions,
   components,
-}) => {
+  additionalProps,
+}: ModalWrapperProps<T>): React.ReactElement | null => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const _focusTrapOptions = useMemo(
     () => ({
@@ -59,7 +61,12 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
         tabIndex={-1}
         style={{ position: 'relative' }}
       >
-        <components.Modal title={title} description={description} close={close}>
+        <components.Modal
+          title={title}
+          description={description}
+          close={close}
+          additionalProps={additionalProps}
+        >
           {children}
         </components.Modal>
       </div>

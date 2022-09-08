@@ -2,7 +2,7 @@ import React from 'react';
 import { UseModalOptions } from '..';
 import { ModalConfigContext } from '../hooks/useModalConfig';
 
-interface ModalProviderProps extends UseModalOptions {
+interface ModalProviderProps extends UseModalOptions<{}> {
   children?: React.ReactNode;
 }
 
