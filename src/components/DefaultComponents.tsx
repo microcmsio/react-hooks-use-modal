@@ -30,7 +30,7 @@ const Overlay: React.FC = () => {
   return <div style={overlayStyle} />;
 };
 
-const Modal: React.FC<ModalProps> = ({ children }) => {
+const Modal: React.FC<ModalProps<{}>> = ({ children }) => {
   return <Fragment>{children}</Fragment>;
 };
 
