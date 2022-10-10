@@ -6,7 +6,7 @@ This is a react hook which can open the modal easily.
 
 ```javascript
 import React, { useState, useCallback } from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { useModal } from 'react-hooks-use-modal';
 
 const App = () => {
@@ -30,7 +30,8 @@ const App = () => {
     </div>
   );
 };
-render(<App />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
 ```
 
 ## Syntax
