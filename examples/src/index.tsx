@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import routes from '../../examples-routes';
 
@@ -60,4 +60,5 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root')!);
+root.render(<App />);
