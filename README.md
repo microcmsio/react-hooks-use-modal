@@ -207,19 +207,13 @@ $ npm run build
 $ npm run watch
 ```
 
-### Build examples
-
-```
-$ npm run build:demo
-```
-
-### Start examples
+### Start demo
 
 ```
 $ npm start
 ```
 
-http://localhost:3001
+Then access it on http://localhost:3001/react-hooks-use-modal
 
 ## License
 
