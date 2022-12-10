@@ -13,4 +13,8 @@ module.exports = [
     path: '/components-option',
     title: 'useModal with components option example',
   },
+  {
+    path: '/future',
+    title: 'Future useModal example',
+  },
 ];
