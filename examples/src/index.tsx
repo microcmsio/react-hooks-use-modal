@@ -54,13 +54,15 @@ const Wrapper = ({ children }: PropsWithChildren<{}>) => {
 
 const App = () => {
   return (
-    <React.StrictMode>
-      <Wrapper>
-        <CurrentModal />
-      </Wrapper>
-    </React.StrictMode>
+    <Wrapper>
+      <CurrentModal />
+    </Wrapper>
   );
 };
 
 const root = createRoot(document.getElementById('root')!);
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
