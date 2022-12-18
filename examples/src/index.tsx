@@ -54,9 +54,11 @@ const Wrapper = ({ children }: PropsWithChildren<{}>) => {
 
 const App = () => {
   return (
-    <Wrapper>
-      <CurrentModal />
-    </Wrapper>
+    <React.StrictMode>
+      <Wrapper>
+        <CurrentModal />
+      </Wrapper>
+    </React.StrictMode>
   );
 };
 
