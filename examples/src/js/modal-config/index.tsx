@@ -8,24 +8,24 @@ const modalStyle: React.CSSProperties = {
 };
 
 const Modal = () => {
-  const [Modal, open, close, isOpen] = useModal('root');
+  const [renderModal, open, close, isOpen] = useModal('root');
 
   return (
     <div>
       <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
-      <Modal>
+      {renderModal(
         <div style={modalStyle}>
           <h1>Title</h1>
           <p>This is a customizable modal.</p>
           <button onClick={close}>CLOSE</button>
         </div>
-      </Modal>
+      )}
     </div>
   );
 };
 const ModalWithOverrideOptions = () => {
-  const [Modal, open, close, isOpen] = useModal('root', {
+  const [renderModal, open, close, isOpen] = useModal('root', {
     focusTrapOptions: {
       clickOutsideDeactivates: false,
     },
@@ -35,13 +35,13 @@ const ModalWithOverrideOptions = () => {
     <div style={{ marginTop: '40px' }}>
       <div>Modal overridden by options is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
-      <Modal>
+      {renderModal(
         <div style={modalStyle}>
           <h1>Title</h1>
           <p>This is a customizable modal.</p>
           <button onClick={close}>CLOSE</button>
         </div>
-      </Modal>
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@ const modalStyle: React.CSSProperties = {
 };
 
 export const Modal = () => {
-  const [Modal, open, close, isOpen] = useModal('root', {
+  const [renderModal, open, close, isOpen] = useModal('root', {
     preventScroll: true,
   });
 
@@ -17,13 +17,13 @@ export const Modal = () => {
     <div>
       <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
-      <Modal>
+      {renderModal(
         <div style={modalStyle}>
           <h1>Title</h1>
           <p>This is a customizable modal.</p>
           <button onClick={close}>CLOSE</button>
         </div>
-      </Modal>
+      )}
     </div>
   );
 };

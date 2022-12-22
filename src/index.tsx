@@ -37,12 +37,14 @@ export interface UseModalOptions<T extends Record<string, unknown>> {
 export interface ModalWrapperProps<T extends Record<string, unknown>> {
   title?: React.ReactNode;
   description?: React.ReactNode;
-  children: React.ReactNode;
   additionalProps?: T;
 }
 
 export type UseModalResult<T extends Record<string, unknown>> = [
-  ModalWrapper: React.FC<ModalWrapperProps<T>>,
+  renderModal: (
+    content: React.ReactNode,
+    props?: ModalWrapperProps<T>
+  ) => JSX.Element,
   open: () => void,
   close: () => void,
   isOpen: boolean
@@ -83,8 +85,11 @@ export const useModal = <T extends Record<string, unknown>>(
   const Overlay = components.Overlay ?? DefaultOverlay;
   const Modal = components.Modal ?? DefaultModal;
 
-  const _ModalWrapper: React.FC<ModalWrapperProps<T>> = useCallback(
-    ({ title, description, children, additionalProps }) => {
+  const renderModal = useCallback(
+    (
+      children: React.ReactNode,
+      { title, description, additionalProps }: ModalWrapperProps<T> = {}
+    ): JSX.Element => {
       return (
         <ModalWrapper
           isOpen={isOpen}
@@ -117,7 +122,7 @@ export const useModal = <T extends Record<string, unknown>>(
     ]
   );
 
-  return [_ModalWrapper, open, close, isOpen];
+  return [renderModal, open, close, isOpen];
 };
 
 export { ModalProvider } from './components/ModalProvider';

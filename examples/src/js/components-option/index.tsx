@@ -2,20 +2,21 @@ import React from 'react';
 import { ModalProps, ModalProvider, useModal } from '../../../../src';
 
 const Modal = () => {
-  const [Modal, open, close, isOpen] = useModal('root');
+  const [renderModal, open, close, isOpen] = useModal('root');
 
   return (
     <div>
       <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
-      <Modal title="Title" description="This is a customizable modal.">
-        <button onClick={close}>CLOSE</button>
-      </Modal>
+      {renderModal(<button onClick={close}>CLOSE</button>, {
+        title: 'Title',
+        description: 'This is a customizable modal.',
+      })}
     </div>
   );
 };
 const ModalWithOverrideOptions = () => {
-  const [Modal, open, close, isOpen] = useModal('root', {
+  const [renderModal, open, close, isOpen] = useModal('root', {
     components: {
       Modal: ({ title, description, children }) => {
         return (
@@ -39,9 +40,11 @@ const ModalWithOverrideOptions = () => {
     <div style={{ marginTop: '40px' }}>
       <div>Overrided style modal is Open? {isOpen ? 'Yes' : 'No'}</div>
       <button onClick={open}>OPEN</button>
-      <Modal title="Title" description="This is a customizable modal.">
-        <button onClick={close}>CLOSE</button>
-      </Modal>
+
+      {renderModal(<button onClick={close}>CLOSE</button>, {
+        title: 'Title',
+        description: 'This is a customizable modal.',
+      })}
     </div>
   );
 };
@@ -96,7 +99,7 @@ const OverrideModal: React.FC<OverrideModalProps> = ({
 };
 
 const ModalWithAdditionalProps = () => {
-  const [Modal, open, close, isOpen] = useModal('root', {
+  const [renderModal, open, close, isOpen] = useModal('root', {
     components: {
       Modal: OverrideModal, // The type of `additionalProps` that can be specified for `Modal` is automatically determined according to the type of `components.Modal` props.
     },
@@ -109,13 +112,11 @@ const ModalWithAdditionalProps = () => {
         {isOpen ? 'Yes' : 'No'}
       </div>
       <button onClick={open}>OPEN</button>
-      <Modal
-        title="Title"
-        description="This is a customizable modal."
-        additionalProps={{ footer: <button onClick={close}>CLOSE</button> }}
-      >
-        {''}
-      </Modal>
+      {renderModal(<button onClick={close}>CLOSE</button>, {
+        title: 'Title',
+        description: 'This is a customizable modal.',
+        additionalProps: { footer: <button onClick={close}>CLOSE</button> },
+      })}
     </div>
   );
 };

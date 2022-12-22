@@ -1,5 +1,5 @@
 import { Options as FocusTrapOptions } from 'focus-trap';
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalProps, OverlayProps, WrapperProps } from '..';
 
