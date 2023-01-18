@@ -7,7 +7,6 @@ import React, {
 
 import { ModalContentDefault } from './components/DefaultComponents';
 import { useModalConfig } from './hooks/useModalConfig';
-import { useBodyScrollLock } from './hooks/useBodyScrollLock';
 import styles from './index.module.css';
 
 export type ModalWrapperProps = {
@@ -25,7 +24,6 @@ export type ModalContentProps = Pick<
 
 export type UseModalOptions = {
   initialValue?: boolean;
-  preventScroll?: boolean;
   closeOnOverlayClick?: boolean;
   components?: {
     ModalContent?: React.FC<ModalContentProps>;
@@ -46,8 +44,6 @@ export const useModal: UseModal = (options) => {
 
   const initialValue =
     options?.initialValue ?? modalConfig.initialValue ?? false;
-  const preventScroll =
-    options?.preventScroll ?? modalConfig.preventScroll ?? true;
   const closeOnOverlayClick =
     options?.closeOnOverlayClick ?? modalConfig.closeOnOverlayClick ?? true;
   const ModalContent =
@@ -90,8 +86,6 @@ export const useModal: UseModal = (options) => {
   const close = useCallback(() => {
     ref.current?.close();
   }, []);
-
-  useBodyScrollLock(ref, isOpen, preventScroll);
 
   const handleOverlayClick: React.MouseEventHandler<HTMLDialogElement> =
     useCallback(
