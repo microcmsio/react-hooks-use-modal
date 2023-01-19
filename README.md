@@ -210,7 +210,7 @@ $ npm run watch
 ### Start demo
 
 ```
-$ npm start
+$ npm run start:demo
 ```
 
 Then access it on http://localhost:3001/react-hooks-use-modal

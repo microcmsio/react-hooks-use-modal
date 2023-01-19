@@ -8,6 +8,7 @@ import { ModalWrapper as ComponentsOptionModal } from './js/components-option';
 import { Modal as InitialValueModal } from './js/initial-value';
 import { ModalWrapper as ModalProviderModal } from './js/modal-config';
 import { Modal as PreventScrollModal } from './js/prevent-scroll';
+import { Modal as FutureCommonModal } from './js/future';
 
 const CurrentModal = () => {
   switch (
@@ -26,6 +27,9 @@ const CurrentModal = () => {
     }
     case '/components-option': {
       return <ComponentsOptionModal />;
+    }
+    case '/future': {
+      return <FutureCommonModal />;
     }
     default: {
       return <CommonModal />;

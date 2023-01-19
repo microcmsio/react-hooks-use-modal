@@ -6,7 +6,8 @@
     "jsx": "react",
     "jsxFactory": "React.createElement",
     "strict": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./"
   },
-  "include": ["src"]
+  "include": ["src/**/*", "css-modules.d.ts"]
 }
