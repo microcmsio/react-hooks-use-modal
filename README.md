@@ -192,25 +192,25 @@ https://microcmsio.github.io/react-hooks-use-modal/
 ### Setup
 
 ```
-$ npm install
+$ yarn
 ```
 
 ### Build src
 
 ```
-$ npm run build
+$ yarn build
 ```
 
 ### Watch src
 
 ```
-$ npm run watch
+$ yarn watch
 ```
 
 ### Start demo
 
 ```
-$ npm run start:demo
+$ yarn start:demo
 ```
 
 Then access it on http://localhost:3001/react-hooks-use-modal
