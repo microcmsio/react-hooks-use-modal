@@ -1,14 +1,15 @@
 import { Options as FocusTrapOptions } from 'focus-trap';
+import FocusTrap from 'focus-trap-react';
 import React, { useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalProps, OverlayProps, WrapperProps } from '..';
 
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
-import { useFocusTrap } from '../hooks/useFocusTrap';
 
 interface ModalWrapperProps<T extends Record<string, unknown>> {
   children: React.ReactNode;
   isOpen: boolean;
+  open: () => void;
   close: () => void;
   elementId: 'root' | string;
   title?: React.ReactNode;
@@ -26,6 +27,7 @@ interface ModalWrapperProps<T extends Record<string, unknown>> {
 export const ModalWrapper = <T extends Record<string, unknown>>({
   children,
   isOpen,
+  open,
   close,
   elementId = 'root',
   title,
@@ -36,15 +38,17 @@ export const ModalWrapper = <T extends Record<string, unknown>>({
   additionalProps,
 }: ModalWrapperProps<T>): React.ReactElement | null => {
   const dialogRef = useRef<HTMLDivElement>(null);
-  const _focusTrapOptions = useMemo(
+  const _focusTrapOptions: FocusTrapOptions = useMemo(
     () => ({
+      onActivate: open,
       onDeactivate: close,
       clickOutsideDeactivates: true,
+      fallbackFocus: dialogRef.current ?? undefined,
       ...focusTrapOptions,
     }),
-    [close, focusTrapOptions]
+    [close, focusTrapOptions, open]
   );
-  useFocusTrap(dialogRef, isOpen, _focusTrapOptions);
+
   useBodyScrollLock(dialogRef, isOpen, preventScroll);
 
   if (isOpen === false) {
@@ -54,22 +58,23 @@ export const ModalWrapper = <T extends Record<string, unknown>>({
   return createPortal(
     <components.Wrapper>
       <components.Overlay />
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        tabIndex={-1}
-        style={{ position: 'relative' }}
-      >
-        <components.Modal
-          title={title}
-          description={description}
-          close={close}
-          additionalProps={additionalProps}
+      <FocusTrap focusTrapOptions={_focusTrapOptions}>
+        <div
+          role="dialog"
+          aria-modal="true"
+          tabIndex={-1}
+          style={{ position: 'relative' }}
         >
-          {children}
-        </components.Modal>
-      </div>
+          <components.Modal
+            title={title}
+            description={description}
+            close={close}
+            additionalProps={additionalProps}
+          >
+            {children}
+          </components.Modal>
+        </div>
+      </FocusTrap>
     </components.Wrapper>,
     document.getElementById(elementId) as HTMLElement
   );
