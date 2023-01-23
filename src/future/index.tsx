@@ -81,6 +81,8 @@ export const useModal: UseModal = (options) => {
 
   const open: (options?: { isModal?: boolean }) => void = useCallback(
     (options = {}) => {
+      options.isModal = options.isModal ?? true;
+
       if (options.isModal) {
         ref.current?.showModal();
       } else {
