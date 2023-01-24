@@ -40,11 +40,18 @@ export const ModalWrapper = <T extends Record<string, unknown>>({
   const dialogRef = useRef<HTMLDivElement>(null);
   const _focusTrapOptions: FocusTrapOptions = useMemo(
     () => ({
-      onActivate: open,
-      onDeactivate: close,
-      clickOutsideDeactivates: true,
-      fallbackFocus: dialogRef.current ?? undefined,
       ...focusTrapOptions,
+      onActivate: () => {
+        open();
+        focusTrapOptions.onActivate?.();
+      },
+      onDeactivate: () => {
+        close();
+        focusTrapOptions.onDeactivate?.();
+      },
+      clickOutsideDeactivates: focusTrapOptions.clickOutsideDeactivates ?? true,
+      fallbackFocus:
+        focusTrapOptions.fallbackFocus ?? dialogRef.current ?? undefined,
     }),
     [close, focusTrapOptions, open]
   );
