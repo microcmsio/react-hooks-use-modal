@@ -88,6 +88,7 @@ export const useModal = <T extends Record<string, unknown>>(
       return (
         <ModalWrapper
           isOpen={isOpen}
+          open={open}
           close={close}
           elementId={elementId}
           title={title}
@@ -113,6 +114,7 @@ export const useModal = <T extends Record<string, unknown>>(
       elementId,
       focusTrapOptions,
       isOpen,
+      open,
       preventScroll,
     ]
   );
