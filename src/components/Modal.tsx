@@ -60,6 +60,7 @@ export const ModalWrapper = <T extends Record<string, unknown>>({
       <components.Overlay />
       <FocusTrap focusTrapOptions={_focusTrapOptions}>
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           tabIndex={-1}
