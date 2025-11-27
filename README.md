@@ -1,5 +1,8 @@
 # useModal
 
+> [!CAUTION]
+> This is deprecated and will not be maintained.
+
 This is a react hook which can open the modal easily.
 
 ## Usage
